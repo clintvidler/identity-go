@@ -1,0 +1,10 @@
+version: v1
+name: buf.build/clintvidler/identity-go
+deps:
+  - buf.build/googleapis/googleapis
+breaking:
+  use:
+    - FILE
+lint:
+  use:
+    - DEFAULT
