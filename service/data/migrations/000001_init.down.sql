@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS users CASCADE;
+DROP TABLE IF EXISTS tokens CASCADE;
+DROP TABLE IF EXISTS pending_registration CASCADE;
+DROP TABLE IF EXISTS pending_reset_password CASCADE;
+DROP TABLE IF EXISTS pending_update_email CASCADE;

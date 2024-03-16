@@ -1,0 +1,57 @@
+version: "3"
+
+services:
+  main:
+    container_name: identity-go
+    build: .
+    ports:
+      - ${GRPC_PORT}:9090
+      - ${REST_PORT}:8080
+    restart: always
+    environment:
+      ADDR: :9090
+      AID: ${AID}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_DEV_PORT: ${DB_DEV_PORT}
+      DB_TEST_PORT: ${DB_TEST_PORT}
+      ACCESS_TOKEN_DURATION: ${ACCESS_TOKEN_DURATION}
+      REFRESH_TOKEN_DURATION: ${REFRESH_TOKEN_DURATION}
+      TZ: "Australia/Sydney"
+    volumes:
+      - ./:/app
+    depends_on:
+      - pg-dev
+    networks:
+      - vaeco_net
+  pg-dev:
+    image: postgres:latest
+    ports:
+      - ${DB_DEV_PORT}:5432
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: "Australia/Sydney"
+    volumes:
+      - .dbdata:/var/lib/postgresql/datastore
+    networks:
+      - vaeco_net
+  pg-test:
+    image: postgres:latest
+    ports:
+      - ${DB_TEST_PORT}:5432
+    restart: always
+    environment:
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+      TZ: "Australia/Sydney"
+    networks:
+      - vaeco_net
+networks:
+  vaeco_net:
+    name: vaeco_net
+    # driver: bridge

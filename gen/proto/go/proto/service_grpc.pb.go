@@ -20,6 +20,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
+	IdentityService_Login_FullMethodName  = "/proto.IdentityService/Login"
 	IdentityService_Create_FullMethodName = "/proto.IdentityService/Create"
 	IdentityService_Read_FullMethodName   = "/proto.IdentityService/Read"
 	IdentityService_Update_FullMethodName = "/proto.IdentityService/Update"
@@ -30,6 +31,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityServiceClient interface {
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReponse, error)
 	Create(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Read(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -42,6 +44,15 @@ type identityServiceClient struct {
 
 func NewIdentityServiceClient(cc grpc.ClientConnInterface) IdentityServiceClient {
 	return &identityServiceClient{cc}
+}
+
+func (c *identityServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReponse, error) {
+	out := new(LoginReponse)
+	err := c.cc.Invoke(ctx, IdentityService_Login_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *identityServiceClient) Create(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*emptypb.Empty, error) {
@@ -84,6 +95,7 @@ func (c *identityServiceClient) Delete(ctx context.Context, in *emptypb.Empty, o
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility
 type IdentityServiceServer interface {
+	Login(context.Context, *LoginRequest) (*LoginReponse, error)
 	Create(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	Read(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
 	Update(context.Context, *emptypb.Empty) (*emptypb.Empty, error)
@@ -95,6 +107,9 @@ type IdentityServiceServer interface {
 type UnimplementedIdentityServiceServer struct {
 }
 
+func (UnimplementedIdentityServiceServer) Login(context.Context, *LoginRequest) (*LoginReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
+}
 func (UnimplementedIdentityServiceServer) Create(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
@@ -118,6 +133,24 @@ type UnsafeIdentityServiceServer interface {
 
 func RegisterIdentityServiceServer(s grpc.ServiceRegistrar, srv IdentityServiceServer) {
 	s.RegisterService(&IdentityService_ServiceDesc, srv)
+}
+
+func _IdentityService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _IdentityService_Create_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -199,6 +232,10 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "proto.IdentityService",
 	HandlerType: (*IdentityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Login",
+			Handler:    _IdentityService_Login_Handler,
+		},
 		{
 			MethodName: "Create",
 			Handler:    _IdentityService_Create_Handler,
