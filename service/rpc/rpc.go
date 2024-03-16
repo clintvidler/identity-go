@@ -1,11 +1,9 @@
-package service
+package rpc
 
 import (
 	"context"
-	"log"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
-
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -16,8 +14,6 @@ type IdentityService struct {
 }
 
 func (IdentityService) Create(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	log.Println("Create()")
-
 	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
 func (IdentityService) Read(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {

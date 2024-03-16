@@ -62,6 +62,38 @@
         ]
       }
     },
+    "/login": {
+      "post": {
+        "operationId": "IdentityService_Login",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoLoginReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoLoginRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/read": {
       "get": {
         "operationId": "IdentityService_Read",
@@ -110,6 +142,28 @@
     }
   },
   "definitions": {
+    "protoLoginReponse": {
+      "type": "object",
+      "properties": {
+        "access": {
+          "type": "string"
+        },
+        "refresh": {
+          "type": "string"
+        }
+      }
+    },
+    "protoLoginRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
     "protobufAny": {
       "type": "object",
       "properties": {

@@ -8,6 +8,13 @@ import "google/protobuf/empty.proto";
 option go_package = "grpc-go/gen/proto/go/proto;proto";
 
 service IdentityService {
+  rpc Login(LoginRequest) returns (LoginReponse) {
+    option (google.api.http) = {
+      post: "/login"
+      body: "*"
+    };
+  }
+
   rpc Create(google.protobuf.Empty) returns (google.protobuf.Empty) {
     option (google.api.http) = {
       post: "/create"
@@ -31,4 +38,14 @@ service IdentityService {
       delete: "/delete"
     };
   }
+}
+
+message LoginRequest {
+	string email = 1;
+	string password = 2;
+}
+
+message LoginReponse {
+	string access = 1;
+	string refresh = 2;
 }
