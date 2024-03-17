@@ -25,10 +25,21 @@ func NewServer(ds *data.Store) *Server {
 	return &Server{ds: ds}
 }
 
+func unaryInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
+	return handler(ctx, req)
+}
+
+func streamInterceptor(srv any, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
+	return handler(srv, ss)
+}
+
 func (s *Server) Serve() {
 	// Create the gRPC server
-	grpcServer := grpc.NewServer()
-	proto.RegisterIdentityServiceServer(grpcServer, &rpc.IdentityService{})
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(unaryInterceptor),
+		grpc.StreamInterceptor(streamInterceptor),
+	)
+	proto.RegisterIdentityServiceServer(grpcServer, rpc.NewIdentityService(s.ds))
 
 	// Start serving gRPC on port 9090
 	lis, err := net.Listen("tcp", ":9090")

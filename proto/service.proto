@@ -15,29 +15,29 @@ service IdentityService {
     };
   }
 
-  rpc Create(google.protobuf.Empty) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      post: "/create"
-    };
-  }
+  // rpc Create(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  //   option (google.api.http) = {
+  //     post: "/create"
+  //   };
+  // }
 
-  rpc Read(google.protobuf.Empty) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      get: "/read"
-    };
-  }
+  // rpc Read(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  //   option (google.api.http) = {
+  //     get: "/read"
+  //   };
+  // }
 
-  rpc Update(google.protobuf.Empty) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      put: "/update"
-    };
-  }
+  // rpc Update(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  //   option (google.api.http) = {
+  //     put: "/update"
+  //   };
+  // }
 
-  rpc Delete(google.protobuf.Empty) returns (google.protobuf.Empty) {
-    option (google.api.http) = {
-      delete: "/delete"
-    };
-  }
+  // rpc Delete(google.protobuf.Empty) returns (google.protobuf.Empty) {
+  //   option (google.api.http) = {
+  //     delete: "/delete"
+  //   };
+  // }
 }
 
 message LoginRequest {
