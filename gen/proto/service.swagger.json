@@ -47,9 +47,57 @@
           "IdentityService"
         ]
       }
+    },
+    "/user": {
+      "post": {
+        "operationId": "IdentityService_CurrentUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoCurrentUserReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoCurrentUserRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
     }
   },
   "definitions": {
+    "protoCurrentUserReponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
+    },
+    "protoCurrentUserRequest": {
+      "type": "object",
+      "properties": {
+        "access": {
+          "type": "string"
+        }
+      }
+    },
     "protoLoginReponse": {
       "type": "object",
       "properties": {

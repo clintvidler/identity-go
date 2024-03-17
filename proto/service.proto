@@ -8,43 +8,31 @@ import "google/protobuf/empty.proto";
 option go_package = "grpc-go/gen/proto/go/proto;proto";
 
 service IdentityService {
+  rpc CurrentUser(CurrentUserRequest) returns (CurrentUserReponse) {
+    option (google.api.http) = {
+      post: "/user"
+      body: "*"
+    };
+  }
   rpc Login(LoginRequest) returns (LoginReponse) {
     option (google.api.http) = {
       post: "/login"
       body: "*"
     };
   }
+}
 
-  // rpc Create(google.protobuf.Empty) returns (google.protobuf.Empty) {
-  //   option (google.api.http) = {
-  //     post: "/create"
-  //   };
-  // }
-
-  // rpc Read(google.protobuf.Empty) returns (google.protobuf.Empty) {
-  //   option (google.api.http) = {
-  //     get: "/read"
-  //   };
-  // }
-
-  // rpc Update(google.protobuf.Empty) returns (google.protobuf.Empty) {
-  //   option (google.api.http) = {
-  //     put: "/update"
-  //   };
-  // }
-
-  // rpc Delete(google.protobuf.Empty) returns (google.protobuf.Empty) {
-  //   option (google.api.http) = {
-  //     delete: "/delete"
-  //   };
-  // }
+message CurrentUserRequest {
+	string access = 1;
+}
+message CurrentUserReponse {
+	string id = 1;
 }
 
 message LoginRequest {
 	string email = 1;
 	string password = 2;
 }
-
 message LoginReponse {
 	string access = 1;
 	string refresh = 2;
