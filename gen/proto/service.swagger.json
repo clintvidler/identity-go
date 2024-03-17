@@ -16,52 +16,6 @@
     "application/json"
   ],
   "paths": {
-    "/create": {
-      "post": {
-        "operationId": "IdentityService_Create",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "IdentityService"
-        ]
-      }
-    },
-    "/delete": {
-      "delete": {
-        "operationId": "IdentityService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "IdentityService"
-        ]
-      }
-    },
     "/login": {
       "post": {
         "operationId": "IdentityService_Login",
@@ -89,52 +43,6 @@
             }
           }
         ],
-        "tags": [
-          "IdentityService"
-        ]
-      }
-    },
-    "/read": {
-      "get": {
-        "operationId": "IdentityService_Read",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "tags": [
-          "IdentityService"
-        ]
-      }
-    },
-    "/update": {
-      "put": {
-        "operationId": "IdentityService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
         "tags": [
           "IdentityService"
         ]

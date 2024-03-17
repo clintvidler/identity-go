@@ -1,27 +1,32 @@
 package rpc
 
 import (
-	"context"
+	"log"
+	"os"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
-	"google.golang.org/protobuf/types/known/emptypb"
+	"github.com/clintvidler/identity-go/service/data"
 )
 
 type IdentityService struct {
 	*proto.UnimplementedIdentityServiceServer
+	data   *data.Store
+	prvKey []byte
+	pubKey []byte
 }
 
-func (IdentityService) Create(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Create not implemented")
-}
-func (IdentityService) Read(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Read not implemented")
-}
-func (IdentityService) Update(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
-}
-func (IdentityService) Delete(context.Context, *emptypb.Empty) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+func NewIdentityService(ds *data.Store) *IdentityService {
+	prvKey, err := os.ReadFile("cert/id_rsa")
+
+	if err != nil {
+		log.Printf("Error: %s", err)
+	}
+
+	pubKey, err := os.ReadFile("cert/id_rsa.pub")
+
+	if err != nil {
+		log.Printf("Error: %s", err)
+	}
+
+	return &IdentityService{data: ds, prvKey: prvKey, pubKey: pubKey}
 }

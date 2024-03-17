@@ -2,13 +2,48 @@ package rpc
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+
+	"google.golang.org/grpc/peer"
 )
 
-func (IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*proto.LoginReponse, error) {
+func (s IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*proto.LoginReponse, error) {
 	log.Printf("Login(%s, %s)", req.Email, req.Password)
 
-	return &proto.LoginReponse{Access: "abc", Refresh: "xyz"}, nil
+	// Find user by email
+	user, err := s.data.User.ReadOne(0, req.Email)
+	if err != nil {
+		// Bad request: User with that email not found
+		log.Printf("Error: %s", err)
+		return nil, err
+	}
+
+	// Verify users password
+	if err = user.ComparePassword(req.Password); err != nil {
+		// Bad request: Wrong password
+		log.Printf("Error: %s", err)
+		return nil, err
+	}
+
+	// Read the app_id
+	p, _ := peer.FromContext(ctx)
+	aid := p.Addr.String()
+
+	// Start a new family of tokens
+	if err = s.data.Token.DeleteAppFamily(fmt.Sprint(user.Id), aid); err != nil {
+		log.Printf("Error: %s", err)
+		return nil, err
+	}
+
+	// Generate new tokens
+	at, rt, err := s.Generate(fmt.Sprint(user.Id), aid)
+	if err != nil {
+		log.Printf("Error: %s", err)
+		return nil, err
+	}
+
+	return &proto.LoginReponse{Access: at, Refresh: rt}, nil
 }

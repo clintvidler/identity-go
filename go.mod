@@ -4,6 +4,7 @@ go 1.22.1
 
 require (
 	github.com/go-openapi/runtime v0.28.0
+	github.com/golang-jwt/jwt v3.2.2+incompatible
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1
 	github.com/jackc/pgx/v5 v5.5.5
 	github.com/stretchr/testify v1.9.0
