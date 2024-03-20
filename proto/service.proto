@@ -22,9 +22,7 @@ service IdentityService {
   }
 }
 
-message CurrentUserRequest {
-	string access = 1;
-}
+message CurrentUserRequest {}
 message CurrentUserReponse {
 	string id = 1;
 }
@@ -33,7 +31,4 @@ message LoginRequest {
 	string email = 1;
 	string password = 2;
 }
-message LoginReponse {
-	string access = 1;
-	string refresh = 2;
-}
+message LoginReponse {}

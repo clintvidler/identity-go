@@ -91,23 +91,10 @@
       }
     },
     "protoCurrentUserRequest": {
-      "type": "object",
-      "properties": {
-        "access": {
-          "type": "string"
-        }
-      }
+      "type": "object"
     },
     "protoLoginReponse": {
-      "type": "object",
-      "properties": {
-        "access": {
-          "type": "string"
-        },
-        "refresh": {
-          "type": "string"
-        }
-      }
+      "type": "object"
     },
     "protoLoginRequest": {
       "type": "object",
