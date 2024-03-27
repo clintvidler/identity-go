@@ -25,10 +25,6 @@ func NewServer(ds *data.Store) *Server {
 	return &Server{ds: ds}
 }
 
-func unaryInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
-	return handler(ctx, req)
-}
-
 func streamInterceptor(srv any, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
 	return handler(srv, ss)
 }
@@ -36,7 +32,7 @@ func streamInterceptor(srv any, ss grpc.ServerStream, info *grpc.StreamServerInf
 func (s *Server) Serve() {
 	// Create the gRPC server
 	grpcServer := grpc.NewServer(
-		grpc.UnaryInterceptor(unaryInterceptor),
+		grpc.UnaryInterceptor(rpc.IsAuthInterceptor),
 		grpc.StreamInterceptor(streamInterceptor),
 	)
 	proto.RegisterIdentityServiceServer(grpcServer, rpc.NewIdentityService(s.ds))

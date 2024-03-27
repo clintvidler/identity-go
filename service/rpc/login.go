@@ -7,6 +7,8 @@ import (
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
 
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/peer"
 )
 
@@ -45,5 +47,15 @@ func (s IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*p
 		return nil, err
 	}
 
-	return &proto.LoginReponse{Access: at, Refresh: rt}, nil
+	// Creating outgoing metadata
+	err = grpc.SendHeader(ctx, metadata.Pairs(
+		"access-token", at,
+		"refresh-token", rt,
+	))
+	if err != nil {
+		log.Println("err", err)
+		return nil, err
+	}
+
+	return &proto.LoginReponse{}, nil
 }
