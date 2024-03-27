@@ -10,8 +10,7 @@ option go_package = "grpc-go/gen/proto/go/proto;proto";
 service IdentityService {
   rpc CurrentUser(CurrentUserRequest) returns (CurrentUserReponse) {
     option (google.api.http) = {
-      post: "/user"
-      body: "*"
+      get: "/user"
     };
   }
   rpc Login(LoginRequest) returns (LoginReponse) {
@@ -20,15 +19,26 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc Logout(LogoutRequest) returns (LogoutReponse) {
+    option (google.api.http) = {
+      post: "/logout"
+      body: "*"
+    };
+  }
 }
 
 message CurrentUserRequest {}
 message CurrentUserReponse {
-	string id = 1;
+	string Uid = 1;
 }
 
 message LoginRequest {
-	string email = 1;
-	string password = 2;
+	string Email = 1;
+	string Password = 2;
 }
 message LoginReponse {}
+
+message LogoutRequest {
+  string RefreshToken = 1;
+}
+message LogoutReponse {}

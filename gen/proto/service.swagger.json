@@ -48,14 +48,14 @@
         ]
       }
     },
-    "/user": {
+    "/logout": {
       "post": {
-        "operationId": "IdentityService_CurrentUser",
+        "operationId": "IdentityService_Logout",
         "responses": {
           "200": {
             "description": "A successful response.",
             "schema": {
-              "$ref": "#/definitions/protoCurrentUserReponse"
+              "$ref": "#/definitions/protoLogoutReponse"
             }
           },
           "default": {
@@ -71,10 +71,32 @@
             "in": "body",
             "required": true,
             "schema": {
-              "$ref": "#/definitions/protoCurrentUserRequest"
+              "$ref": "#/definitions/protoLogoutRequest"
             }
           }
         ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
+    "/user": {
+      "get": {
+        "operationId": "IdentityService_CurrentUser",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoCurrentUserReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
         "tags": [
           "IdentityService"
         ]
@@ -85,13 +107,10 @@
     "protoCurrentUserReponse": {
       "type": "object",
       "properties": {
-        "id": {
+        "Uid": {
           "type": "string"
         }
       }
-    },
-    "protoCurrentUserRequest": {
-      "type": "object"
     },
     "protoLoginReponse": {
       "type": "object"
@@ -99,10 +118,21 @@
     "protoLoginRequest": {
       "type": "object",
       "properties": {
-        "email": {
+        "Email": {
           "type": "string"
         },
-        "password": {
+        "Password": {
+          "type": "string"
+        }
+      }
+    },
+    "protoLogoutReponse": {
+      "type": "object"
+    },
+    "protoLogoutRequest": {
+      "type": "object",
+      "properties": {
+        "RefreshToken": {
           "type": "string"
         }
       }
