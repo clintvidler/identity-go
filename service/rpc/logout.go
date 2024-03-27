@@ -24,5 +24,5 @@ func (s *IdentityService) Logout(ctx context.Context, req *proto.LogoutRequest) 
 		return nil, err
 	}
 
-	return nil, nil
+	return &proto.LogoutReponse{}, nil
 }

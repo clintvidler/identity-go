@@ -25,6 +25,12 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc Refresh(RefreshRequest) returns (RefreshReponse) {
+    option (google.api.http) = {
+      post: "/refresh"
+      body: "*"
+    };
+  }
 }
 
 message CurrentUserRequest {}
@@ -42,3 +48,9 @@ message LogoutRequest {
   string RefreshToken = 1;
 }
 message LogoutReponse {}
+
+message RefreshRequest {
+  string RefreshToken = 1;
+}
+message RefreshReponse {}
+
