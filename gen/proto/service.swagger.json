@@ -80,6 +80,38 @@
         ]
       }
     },
+    "/refresh": {
+      "post": {
+        "operationId": "IdentityService_Refresh",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoRefreshReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoRefreshRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/user": {
       "get": {
         "operationId": "IdentityService_CurrentUser",
@@ -130,6 +162,17 @@
       "type": "object"
     },
     "protoLogoutRequest": {
+      "type": "object",
+      "properties": {
+        "RefreshToken": {
+          "type": "string"
+        }
+      }
+    },
+    "protoRefreshReponse": {
+      "type": "object"
+    },
+    "protoRefreshRequest": {
       "type": "object",
       "properties": {
         "RefreshToken": {

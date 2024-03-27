@@ -48,11 +48,10 @@ func (s IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*p
 	}
 
 	// Creating outgoing metadata
-	err = grpc.SendHeader(ctx, metadata.Pairs(
+	if err = grpc.SendHeader(ctx, metadata.Pairs(
 		"access-token", at,
 		"refresh-token", rt,
-	))
-	if err != nil {
+	)); err != nil {
 		log.Println("err", err)
 		return nil, err
 	}
