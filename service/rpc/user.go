@@ -16,7 +16,7 @@ type KeyUid struct{}
 type KeyAid struct{}
 
 func (s *IdentityService) CurrentUser(ctx context.Context, req *proto.CurrentUserRequest) (*proto.CurrentUserReponse, error) {
-	return &proto.CurrentUserReponse{Id: fmt.Sprint(ctx.Value(KeyUid{}))}, nil
+	return &proto.CurrentUserReponse{Uid: fmt.Sprint(ctx.Value(KeyUid{}))}, nil
 }
 
 func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
