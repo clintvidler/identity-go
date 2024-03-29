@@ -5,7 +5,6 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"time"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
 	"github.com/clintvidler/identity-go/service/data"
@@ -13,8 +12,8 @@ import (
 
 	openapiMW "github.com/go-openapi/runtime/middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"github.com/improbable-eng/grpc-web/go/grpcweb"
 	"google.golang.org/grpc"
-	"google.golang.org/grpc/credentials/insecure"
 )
 
 type Server struct {
@@ -37,33 +36,35 @@ func (s *Server) Serve() {
 	)
 	proto.RegisterIdentityServiceServer(grpcServer, rpc.NewIdentityService(s.ds))
 
-	// Start serving gRPC on port 9090
+	// Wrap the gRPC server with gRPC-Web handler
+	wrappedGrpc := grpcweb.WrapServer(grpcServer)
+
+	// Start serving on port 9090
 	lis, err := net.Listen("tcp", ":9090")
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
 	}
-	go grpcServer.Serve(lis)
+	defer lis.Close()
 	log.Println("gRPC server ready on :9090")
 
-	// Dial the gRPC server to make a client connection
-	conn, err := grpc.Dial(":9090", grpc.WithTransportCredentials(insecure.NewCredentials()))
-	if err != nil {
-		log.Fatalf("failed to dial: %v", err)
-	}
-	defer conn.Close()
+	// Create a standard HTTP router
+	mux := http.NewServeMux()
 
-	// Create the RESTful server using the gRPC client and connection
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
+	// Mount the gRPC-Web handler
+	mux.HandleFunc("/proto.IdentityService/", func(w http.ResponseWriter, req *http.Request) {
+		if wrappedGrpc.IsGrpcWebRequest(req) {
+			wrappedGrpc.ServeHTTP(w, req)
+			return
+		}
+		http.Error(w, "Unexpected request", http.StatusBadRequest)
+	})
+
+	// Mount the RESTful handlers
 	rmux := runtime.NewServeMux()
-	client := proto.NewIdentityServiceClient(conn)
-	err = proto.RegisterIdentityServiceHandlerClient(ctx, rmux, client)
+	err = proto.RegisterIdentityServiceHandlerServer(context.Background(), rmux, rpc.NewIdentityService(s.ds))
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	// Create a standard HTTP router and mount the gRPC gateway
-	mux := http.NewServeMux()
 	mux.Handle("/", rmux)
 
 	// Mount the docs
@@ -72,9 +73,26 @@ func (s *Server) Serve() {
 	})
 	mux.Handle("/docs", openapiMW.Redoc(openapiMW.RedocOpts{SpecURL: "/swagger.json", Path: "docs"}, nil))
 
-	// Start serving RESTful on port 8080
+	// Start serving RESTful and gRPC-Web on port 8080
 	log.Println("HTTP server ready on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(":8080", addCORSHeaders(mux)); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// addCORSHeaders is a middleware function to add CORS headers to responses.
+func addCORSHeaders(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-User-Agent, X-Grpc-Web")
+
+		// Stop here if its Preflighted OPTIONS request
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		// Call the next handler
+		next.ServeHTTP(w, r)
+	})
 }

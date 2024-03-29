@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+package proto;
+
+// import "google/api/annotations.proto";
+// import "google/protobuf/empty.proto";
+
+// option go_package = "grpc-go/gen/proto/go/proto;proto";
+
+service IdentityService {
+  rpc CurrentUser(CurrentUserRequest) returns (CurrentUserReponse) {}
+  rpc Login(LoginRequest) returns (LoginReponse) {}
+  rpc Logout(LogoutRequest) returns (LogoutReponse) {}
+  rpc Refresh(RefreshRequest) returns (RefreshReponse) {}
+}
+
+message CurrentUserRequest {}
+message CurrentUserReponse {
+	string Uid = 1;
+}
+
+message LoginRequest {
+	string Email = 1;
+	string Password = 2;
+}
+message LoginReponse {}
+
+message LogoutRequest {
+  string RefreshToken = 1;
+}
+message LogoutReponse {}
+
+message RefreshRequest {
+  string RefreshToken = 1;
+}
+message RefreshReponse {}
+

@@ -32,6 +32,7 @@ func (s IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*p
 
 	// Read the app_id
 	p, _ := peer.FromContext(ctx)
+	log.Println("==================", p, "==")
 	aid := p.Addr.String()
 
 	// Start a new family of tokens
