@@ -18,9 +18,10 @@ export class UserComponent implements OnInit {
   user: User | null = null;
 
   ngOnInit(): void {
-    // this.user = this.usersService.user;
-    // this.identityService.user().subscribe((res) => {
-    //   this.user = res;
-    // });
+    this.user = this.identityService.user;
+    this.identityService.profile().subscribe((res) => {
+      console.warn(res);
+      this.user = res;
+    });
   }
 }

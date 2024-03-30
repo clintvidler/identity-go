@@ -29,6 +29,34 @@ export class IdentityService {
     this.userSubject.next(user);
   }
 
+  profile(): Observable<User> {
+    return this.http
+      .get<User>(`${environment.server}/user`, this.httpOptions)
+      .pipe(
+        map((res: any) => {
+          console.warn(res);
+          return res.body as User;
+        }),
+        catchError(err => {
+          return null as any;
+        })
+      ) as Observable<User>;
+  }
+
+  currentUser(): Observable<User> {
+    return this.http
+      .get<User>(`${environment.server}/current-user`, this.httpOptions)
+      .pipe(
+        map((res: any) => {
+          console.warn(res);
+          return res.body as User;
+        }),
+        catchError(err => {
+          return null as any;
+        })
+      ) as Observable<User>;
+  }
+
   // Login
 
   login(data: LoginCredential): Observable<any> {
