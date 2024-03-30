@@ -18,10 +18,13 @@ export class AppComponent {
   constructor(private identityService: IdentityService) {}
 
   login() {
-    const lc: LoginCredential = { email: 'x@x', password: 'x' };
+    const lc: LoginCredential = { Email: 'x@x', Password: 'x' };
 
     this.identityService.login(lc).subscribe(res => {
-      console.warn(res);
+      var accessToken = res.headers.get('grpc-metadata-access-token');
+      var refreshToken = res.headers.get('grpc-metadata-refresh-token');
+      console.warn('Access token:', accessToken);
+      console.warn('Refresh token:', refreshToken);
     });
   }
 }
