@@ -1,12 +1,26 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink, RouterOutlet } from '@angular/router';
+
+import { User } from '../../interfaces/user';
+import { IdentityService } from '../../services/identity.service';
 
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrl: './user.component.scss',
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
+  constructor(private identityService: IdentityService) {}
 
+  user: User | null = null;
+
+  ngOnInit(): void {
+    // this.user = this.usersService.user;
+    // this.identityService.user().subscribe((res) => {
+    //   this.user = res;
+    // });
+  }
 }
