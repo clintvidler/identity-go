@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Observable, catchError, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { LoginCredential, User } from '../interfaces/user';
@@ -16,6 +16,18 @@ export class IdentityService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     observe: 'response'
   };
+
+  // Current user
+
+  private userSubject = new BehaviorSubject<User | null>(null);
+
+  get user(): User | null {
+    return this.userSubject.value;
+  }
+
+  set user(user: User | null) {
+    this.userSubject.next(user);
+  }
 
   // Login
 
