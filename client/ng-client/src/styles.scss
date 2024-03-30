@@ -1,1 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&display=swap";
+@import "https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap";
+
+:root {
+  --primary-color-50: #f0f9ff;
+  --primary-color-100: #dff3ff;
+  --primary-color-200: #b9e7fe;
+  --primary-color-300: #7bd7fe;
+  --primary-color-400: #34c2fc;
+  --primary-color-500: #0aaced;
+  --primary-color-600: #0089cb;
+  --primary-color-700: #006699;
+  --primary-color-800: #055d87;
+  --primary-color-900: #0a4c70;
+  --primary-color-950: #07304a;
+
+  --accent-color-50: #fff4ed;
+  --accent-color-100: #ffe5d4;
+  --accent-color-200: #ffc8a9;
+  --accent-color-300: #ff9966;
+  --accent-color-400: #fe6f39;
+  --accent-color-500: #fc4913;
+  --accent-color-600: #ed2f09;
+  --accent-color-700: #c51f09;
+  --accent-color-800: #9c1a10;
+  --accent-color-900: #7e1810;
+  --accent-color-950: #440906;
+
+  --danger-color-50: #fcf5f4;
+  --danger-color-100: #faeae9;
+  --danger-color-200: #f5d6d7;
+  --danger-color-300: #edb4b6;
+  --danger-color-400: #e28a8f;
+  --danger-color-500: #d45f68;
+  --danger-color-600: #be4051;
+  --danger-color-700: #962e3e;
+  --danger-color-800: #862b3c;
+  --danger-color-900: #732838;
+  --danger-color-950: #3f121b;
+
+  --success-color-50: #f2fbf3;
+  --success-color-100: #e1f7e4;
+  --success-color-200: #c4eeca;
+  --success-color-300: #96dfa0;
+  --success-color-400: #60c870;
+  --success-color-500: #3bac4d;
+  --success-color-600: #2e963e;
+  --success-color-700: #257031;
+  --success-color-800: #22592b;
+  --success-color-900: #1e4926;
+  --success-color-950: #0b2811;
+
+  --info-color-50: #eef0ff;
+  --info-color-100: #e0e4ff;
+  --info-color-200: #c8cdfd;
+  --info-color-300: #a6adfb;
+  --info-color-400: #8483f6;
+  --info-color-500: #6f65ef;
+  --info-color-600: #5f48e3;
+  --info-color-700: #523ac8;
+  --info-color-800: #3e2e96;
+  --info-color-900: #3a2f80;
+  --info-color-950: #231c4a;
+
+  --gray-color-50: #f9fafb;
+  --gray-color-100: #f3f4f6;
+  --gray-color-200: #e5e7eb;
+  --gray-color-300: #d1d5db;
+  --gray-color-400: #9ca3af;
+  --gray-color-500: #6b7280;
+  --gray-color-600: #4b5563;
+  --gray-color-700: #374151;
+  --gray-color-800: #1f2937;
+  --gray-color-900: #111827;
+  --gray-color-950: #030712;
+
+  --neutral-color-50: #fafafa;
+  --neutral-color-100: #f5f5f5;
+  --neutral-color-200: #e5e5e5;
+  --neutral-color-300: #d4d4d4;
+  --neutral-color-400: #a3a3a3;
+  --neutral-color-500: #737373;
+  --neutral-color-600: #525252;
+  --neutral-color-700: #404040;
+  --neutral-color-800: #262626;
+  --neutral-color-900: #171717;
+  --neutral-color-950: #0a0a0a;
+}
+
+html {
+  margin-top: 69px;
+}
+
+/* Light mode */
+@media (prefers-color-scheme: light) {
+  body {
+    background-color: var(--neutral-color-100);
+    color: black;
+  }
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: var(--neutral-color-900);
+    color: white;
+  }
+}
+
+// a {
+//   position: relative;
+
+//   &:before {
+//     content: "";
+//     background-color: black;
+//     width: 100%;
+//     height: 1px;
+//     position: absolute;
+//     bottom: 0;
+//     // transition: ease-in-out height 200ms, ease-in-out bottom 200ms;
+//   }
+
+//   &:hover {
+//     &:before {
+//       height: 3px;
+//       bottom: -2px;
+//     }
+//   }
+// }
