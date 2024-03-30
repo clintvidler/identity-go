@@ -64,7 +64,7 @@ func (s *Server) Serve() {
 
 	// Create a standard HTTP router and mount the gRPC gateway
 	mux := http.NewServeMux()
-	mux.Handle("/", rmux)
+	mux.Handle("/", addCORSHeaders(rmux))
 
 	// Mount the docs
 	mux.HandleFunc("/swagger.json", func(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +74,32 @@ func (s *Server) Serve() {
 
 	// Start serving RESTful on port 8080
 	log.Println("HTTP server ready on :8080")
-	if err := http.ListenAndServe(":8080", mux); err != nil {
+	if err := http.ListenAndServe(":8080", addCORSHeaders(mux)); err != nil {
 		log.Fatal(err)
 	}
+}
+
+// addCORSHeaders is a middleware function to add CORS headers to responses.
+func addCORSHeaders(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		// Set specific origin instead of '*'
+		origin := r.Header.Get("Origin")
+		w.Header().Set("Access-Control-Allow-Origin", origin)
+
+		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-User-Agent, X-Grpc-Web")
+		// Note: "*" doesn't work for withCredentials requests
+		w.Header().Set("Access-Control-Expose-Headers", "Grpc-Metadata-Access-Token, Grpc-Metadata-Refresh-Token")
+
+		// Allow credentials
+		w.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		// Stop here if its Preflighted OPTIONS request
+		if r.Method == "OPTIONS" {
+			return
+		}
+
+		// Call the next handler
+		next.ServeHTTP(w, r)
+	})
 }
