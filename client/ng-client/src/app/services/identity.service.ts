@@ -64,6 +64,11 @@ export class IdentityService {
       .post<Response>(`${environment.server}/login`, data, this.httpOptions)
       .pipe(
         map(res => {
+          var accessToken = res.headers.get('grpc-metadata-access-token');
+          var refreshToken = res.headers.get('grpc-metadata-refresh-token');
+          console.warn('Access token:', accessToken);
+          console.warn('Refresh token:', refreshToken);
+
           return res;
         }),
         catchError(this.handleError<any[]>('login', []))
