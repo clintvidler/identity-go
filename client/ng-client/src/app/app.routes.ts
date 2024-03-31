@@ -6,6 +6,9 @@ import { PublicComponent } from './public/public.component';
 import { LoginComponent } from './public/login/login.component';
 import { isLoggedInGuard } from './guards/is-logged-in.guard';
 import { isNotLoggedInGuard } from './guards/is-not-logged-in.guard';
+import { EditComponent } from './private/user/edit/edit.component';
+import { ViewComponent } from './private/user/view/view.component';
+import { LogoutComponent } from './private/user/logout/logout.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -17,8 +20,12 @@ export const routes: Routes = [
       {
         path: 'user',
         component: UserComponent,
-        children: [],
+        children: [
+          { path: 'edit', component: EditComponent },
+          { path: 'view', component: ViewComponent },
+        ],
       },
+      { path: 'logout', component: LogoutComponent },
     ],
   },
   {
