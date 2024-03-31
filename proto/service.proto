@@ -27,8 +27,7 @@ service IdentityService {
   }
   rpc Refresh(RefreshRequest) returns (RefreshReponse) {
     option (google.api.http) = {
-      post: "/refresh"
-      body: "*"
+      get: "/refresh"
     };
   }
 }

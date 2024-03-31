@@ -47,7 +47,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 
 	if md["grpcgateway-cookie"] != nil {
 		cookies := make(map[string]string)
-		for _, e := range strings.Split(md.Get("grpcgateway-cookie")[0], ";") {
+		for _, e := range strings.Split(md.Get("grpcgateway-cookie")[0], "; ") {
 			parts := strings.Split(e, "=")
 			cookies[parts[0]] = parts[1]
 		}
@@ -69,7 +69,9 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 	// Parse access token claims
 	claims, err := identityService.ParseClaims(access)
 	if err != nil {
-		return nil, err
+		// TODO: respond with 401: unauthorized and listen for this on frontend
+
+		return nil, fmt.Errorf("Access token: %s", err.Error())
 	}
 
 	tokenSubject := claims["sub"].(string)

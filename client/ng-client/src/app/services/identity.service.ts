@@ -39,6 +39,8 @@ export class IdentityService {
     this.userSubject.next(user);
   }
 
+  // TODO: profile and current user are the same, do I keep both for future changability?
+
   profile(): Observable<User> {
     return this.http
       .get<User>(`${environment.server}/user`, this.httpOptions)
@@ -97,6 +99,35 @@ export class IdentityService {
           return res;
         }),
         catchError(this.handleError<any[]>('login', []))
+      );
+  }
+
+  // Refresh token
+
+  refreshToken(): Observable<any> {
+    return this.http
+      .get<Response>(
+        `${environment.server}/refresh`,
+        // { token: this.localStorage.getItem('refreshToken') },
+        // { token: this.cookieService.get('rt') },
+        this.httpOptions
+      )
+      .pipe(
+        map((res) => {
+          // this.localStorage.setItem('refreshToken', res.body);
+
+          var accessToken = res.headers.get('grpc-metadata-access-token') || '';
+          var refreshToken =
+            res.headers.get('grpc-metadata-refresh-token') || '';
+
+          console.warn('New AT: ', accessToken);
+          console.warn('New RT: ', refreshToken);
+
+          this.cookieService.set('at', accessToken);
+          this.cookieService.set('rt', refreshToken);
+
+          return res;
+        })
       );
   }
 

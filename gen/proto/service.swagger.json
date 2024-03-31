@@ -81,7 +81,7 @@
       }
     },
     "/refresh": {
-      "post": {
+      "get": {
         "operationId": "IdentityService_Refresh",
         "responses": {
           "200": {
@@ -99,12 +99,10 @@
         },
         "parameters": [
           {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/protoRefreshRequest"
-            }
+            "name": "RefreshToken",
+            "in": "query",
+            "required": false,
+            "type": "string"
           }
         ],
         "tags": [
@@ -171,14 +169,6 @@
     },
     "protoRefreshReponse": {
       "type": "object"
-    },
-    "protoRefreshRequest": {
-      "type": "object",
-      "properties": {
-        "RefreshToken": {
-          "type": "string"
-        }
-      }
     },
     "protobufAny": {
       "type": "object",
