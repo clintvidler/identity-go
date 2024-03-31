@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
 	"github.com/clintvidler/identity-go/service/util"
@@ -31,7 +32,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		return nil, errors.New("an unexpected error has occured")
 	}
 
-	// If rhe method is not protected, skip to next
+	// If the method is not protected, skip to next
 	if !util.Contains(protected, method) {
 		return handler(ctx, req)
 	}
@@ -42,11 +43,22 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		return nil, errors.New("no metadata found in the context")
 	}
 
-	// Read the access token from the metadata
-	if len(md.Get("access")) < 1 {
-		return nil, errors.New("no access token")
+	var access string
+
+	if md["grpcgateway-cookie"] != nil {
+		cookies := make(map[string]string)
+		for _, e := range strings.Split(md.Get("grpcgateway-cookie")[0], ";") {
+			parts := strings.Split(e, "=")
+			cookies[parts[0]] = parts[1]
+		}
+		access = cookies["at"]
+	} else {
+		// Read the access token from the metadata
+		if len(md.Get("access")) < 1 {
+			return nil, errors.New("no access token")
+		}
+		access = md.Get("access")[0]
 	}
-	access := md.Get("access")[0]
 
 	// Access the IdentityService struct
 	identityService, ok := info.Server.(*IdentityService)

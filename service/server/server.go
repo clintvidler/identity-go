@@ -87,7 +87,7 @@ func addCORSHeaders(next http.Handler) http.Handler {
 		w.Header().Set("Access-Control-Allow-Origin", origin)
 
 		w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-User-Agent, X-Grpc-Web")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, Authorization, X-User-Agent, X-Grpc-Web, Grpc-Metadata-Access")
 		// Note: "*" doesn't work for withCredentials requests
 		w.Header().Set("Access-Control-Expose-Headers", "Grpc-Metadata-Access-Token, Grpc-Metadata-Refresh-Token")
 
