@@ -19,10 +19,13 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	IdentityService_CurrentUser_FullMethodName = "/proto.IdentityService/CurrentUser"
-	IdentityService_Login_FullMethodName       = "/proto.IdentityService/Login"
-	IdentityService_Logout_FullMethodName      = "/proto.IdentityService/Logout"
-	IdentityService_Refresh_FullMethodName     = "/proto.IdentityService/Refresh"
+	IdentityService_CurrentUser_FullMethodName     = "/proto.IdentityService/CurrentUser"
+	IdentityService_Login_FullMethodName           = "/proto.IdentityService/Login"
+	IdentityService_Logout_FullMethodName          = "/proto.IdentityService/Logout"
+	IdentityService_Refresh_FullMethodName         = "/proto.IdentityService/Refresh"
+	IdentityService_RegisterStart_FullMethodName   = "/proto.IdentityService/RegisterStart"
+	IdentityService_RegisterPending_FullMethodName = "/proto.IdentityService/RegisterPending"
+	IdentityService_RegisterFinish_FullMethodName  = "/proto.IdentityService/RegisterFinish"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -33,6 +36,9 @@ type IdentityServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginReponse, error)
 	Logout(ctx context.Context, in *LogoutRequest, opts ...grpc.CallOption) (*LogoutReponse, error)
 	Refresh(ctx context.Context, in *RefreshRequest, opts ...grpc.CallOption) (*RefreshReponse, error)
+	RegisterStart(ctx context.Context, in *RegisterStartRequest, opts ...grpc.CallOption) (*RegisterStartReponse, error)
+	RegisterPending(ctx context.Context, in *RegisterPendingRequest, opts ...grpc.CallOption) (*RegisterPendingReponse, error)
+	RegisterFinish(ctx context.Context, in *RegisterFinishRequest, opts ...grpc.CallOption) (*RegisterFinishReponse, error)
 }
 
 type identityServiceClient struct {
@@ -79,6 +85,33 @@ func (c *identityServiceClient) Refresh(ctx context.Context, in *RefreshRequest,
 	return out, nil
 }
 
+func (c *identityServiceClient) RegisterStart(ctx context.Context, in *RegisterStartRequest, opts ...grpc.CallOption) (*RegisterStartReponse, error) {
+	out := new(RegisterStartReponse)
+	err := c.cc.Invoke(ctx, IdentityService_RegisterStart_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) RegisterPending(ctx context.Context, in *RegisterPendingRequest, opts ...grpc.CallOption) (*RegisterPendingReponse, error) {
+	out := new(RegisterPendingReponse)
+	err := c.cc.Invoke(ctx, IdentityService_RegisterPending_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) RegisterFinish(ctx context.Context, in *RegisterFinishRequest, opts ...grpc.CallOption) (*RegisterFinishReponse, error) {
+	out := new(RegisterFinishReponse)
+	err := c.cc.Invoke(ctx, IdentityService_RegisterFinish_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility
@@ -87,6 +120,9 @@ type IdentityServiceServer interface {
 	Login(context.Context, *LoginRequest) (*LoginReponse, error)
 	Logout(context.Context, *LogoutRequest) (*LogoutReponse, error)
 	Refresh(context.Context, *RefreshRequest) (*RefreshReponse, error)
+	RegisterStart(context.Context, *RegisterStartRequest) (*RegisterStartReponse, error)
+	RegisterPending(context.Context, *RegisterPendingRequest) (*RegisterPendingReponse, error)
+	RegisterFinish(context.Context, *RegisterFinishRequest) (*RegisterFinishReponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -105,6 +141,15 @@ func (UnimplementedIdentityServiceServer) Logout(context.Context, *LogoutRequest
 }
 func (UnimplementedIdentityServiceServer) Refresh(context.Context, *RefreshRequest) (*RefreshReponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Refresh not implemented")
+}
+func (UnimplementedIdentityServiceServer) RegisterStart(context.Context, *RegisterStartRequest) (*RegisterStartReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterStart not implemented")
+}
+func (UnimplementedIdentityServiceServer) RegisterPending(context.Context, *RegisterPendingRequest) (*RegisterPendingReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterPending not implemented")
+}
+func (UnimplementedIdentityServiceServer) RegisterFinish(context.Context, *RegisterFinishRequest) (*RegisterFinishReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method RegisterFinish not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 
@@ -191,6 +236,60 @@ func _IdentityService_Refresh_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_RegisterStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterStartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).RegisterStart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_RegisterStart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).RegisterStart(ctx, req.(*RegisterStartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_RegisterPending_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterPendingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).RegisterPending(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_RegisterPending_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).RegisterPending(ctx, req.(*RegisterPendingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_RegisterFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterFinishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).RegisterFinish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_RegisterFinish_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).RegisterFinish(ctx, req.(*RegisterFinishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -213,6 +312,18 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Refresh",
 			Handler:    _IdentityService_Refresh_Handler,
+		},
+		{
+			MethodName: "RegisterStart",
+			Handler:    _IdentityService_RegisterStart_Handler,
+		},
+		{
+			MethodName: "RegisterPending",
+			Handler:    _IdentityService_RegisterPending_Handler,
+		},
+		{
+			MethodName: "RegisterFinish",
+			Handler:    _IdentityService_RegisterFinish_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -30,6 +30,23 @@ service IdentityService {
       get: "/refresh"
     };
   }
+  rpc RegisterStart(RegisterStartRequest) returns (RegisterStartReponse) {
+    option (google.api.http) = {
+      post: "/register"
+      body: "*"
+    };
+  }
+  rpc RegisterPending(RegisterPendingRequest) returns (RegisterPendingReponse) {
+    option (google.api.http) = {
+      get: "/register/{key}"
+    };
+  }
+  rpc RegisterFinish(RegisterFinishRequest) returns (RegisterFinishReponse) {
+    option (google.api.http) = {
+      post: "/register/{key}"
+      body: "*"
+    };
+  }
 }
 
 message CurrentUserRequest {}
@@ -53,3 +70,20 @@ message RefreshRequest {
 }
 message RefreshReponse {}
 
+message RegisterStartRequest {
+  string email = 1;
+	string password = 2;
+}
+message RegisterStartReponse {
+}
+message RegisterPendingRequest {
+  string key = 1;
+}
+message RegisterPendingReponse {
+}
+message RegisterFinishRequest {
+  string key = 1;
+  string display_name = 2;
+}
+message RegisterFinishReponse {
+}
