@@ -237,6 +237,9 @@
       "properties": {
         "displayName": {
           "type": "string"
+        },
+        "password": {
+          "type": "string"
         }
       }
     },
@@ -277,10 +280,20 @@
       "type": "object"
     },
     "protoRegisterFinishReponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        }
+      }
     },
     "protoRegisterPendingReponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      }
     },
     "protoRegisterStartReponse": {
       "type": "object"
@@ -289,9 +302,6 @@
       "type": "object",
       "properties": {
         "email": {
-          "type": "string"
-        },
-        "password": {
           "type": "string"
         }
       }
