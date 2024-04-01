@@ -109,6 +109,34 @@ export class IdentityService {
       );
   }
 
+  // Logout: Delete browser JWT, and submit the refresh token to the backend handler
+  logout(): Observable<void> {
+    const refreshToken = this.cookieService.get('refresh');
+
+    this.cookieService.delete('access');
+    this.cookieService.delete('refresh');
+
+    return this.http
+      .post<void>(
+        `${environment.server}/logout`,
+        { RefreshToken: refreshToken },
+        this.httpOptions
+      )
+      .pipe(
+        map((res) => {
+          this.router.navigate(['/login']);
+
+          return res;
+        }),
+        catchError(() => {
+          this.router.navigate(['/login']);
+
+          return of();
+        }),
+        tap((res) => this.handleError<any[]>('logoutRequest', [res]))
+      );
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
