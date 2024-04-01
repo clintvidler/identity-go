@@ -8,6 +8,7 @@ import (
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
 	"github.com/clintvidler/identity-go/service/util"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -31,7 +32,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		return nil, errors.New("an unexpected error has occured")
 	}
 
-	// If rhe method is not protected, skip to next
+	// If the method is not protected, skip to next
 	if !util.Contains(protected, method) {
 		return handler(ctx, req)
 	}
@@ -42,11 +43,18 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		return nil, errors.New("no metadata found in the context")
 	}
 
-	// Read the access token from the metadata
-	if len(md.Get("access")) < 1 {
+	var access string
+
+	access, err = util.GetCookie(md, "access")
+	if err != nil {
+		if len(md.Get("access")) > 0 {
+			access = md.Get("access")[0]
+		}
+	}
+
+	if access == "" {
 		return nil, errors.New("no access token")
 	}
-	access := md.Get("access")[0]
 
 	// Access the IdentityService struct
 	identityService, ok := info.Server.(*IdentityService)
@@ -57,7 +65,9 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 	// Parse access token claims
 	claims, err := identityService.ParseClaims(access)
 	if err != nil {
-		return nil, err
+		// TODO: respond with 401: unauthorized and listen for this on frontend
+
+		return nil, fmt.Errorf("Access token: %s", err.Error())
 	}
 
 	tokenSubject := claims["sub"].(string)

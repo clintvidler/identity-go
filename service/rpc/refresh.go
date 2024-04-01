@@ -6,21 +6,42 @@ import (
 	"fmt"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+	"github.com/clintvidler/identity-go/service/util"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
 func (s *IdentityService) Refresh(ctx context.Context, req *proto.RefreshRequest) (*proto.RefreshReponse, error) {
-	// Validate token
-	claims, err := s.ParseClaims(fmt.Sprint(req.RefreshToken))
+	// Read the metadata
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return nil, errors.New("no metadata found in the context")
+	}
+
+	var refresh string
+
+	refresh, err := util.GetCookie(md, "refresh")
 	if err != nil {
-		return nil, err
+		if len(md.Get("refresh")) > 0 {
+			refresh = md.Get("refresh")[0]
+		}
+	}
+
+	if refresh == "" {
+		return nil, errors.New("no refresh token")
+	}
+
+	// Validate token
+	claims, err := s.ParseClaims(fmt.Sprint(refresh))
+	if err != nil {
+		return nil, fmt.Errorf("Refresh token: %s", err.Error())
 	}
 	uid := claims["sub"].(string)
 	aid := claims["aud"].(string)
 
 	// Ensure the token exists in the current family
-	if err := s.data.Token.Exists(req.RefreshToken); err != nil {
+	if err := s.data.Token.Exists(refresh); err != nil {
 		return nil, err
 	}
 
@@ -31,7 +52,7 @@ func (s *IdentityService) Refresh(ctx context.Context, req *proto.RefreshRequest
 	}
 
 	// Invalidate (remove) all of the users tokens if an old token from the current family was provided
-	if req.RefreshToken != lt {
+	if refresh != lt {
 		if err := s.data.Token.DeleteAppFamily(uid, aid); err != nil {
 			return nil, err
 		}

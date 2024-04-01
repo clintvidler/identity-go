@@ -1,0 +1,5 @@
+<ul class="validation-errors">
+  <li *ngFor="let error of errors | keyvalue">
+    {{ error.key }}: {{ error.value }}
+  </li>
+</ul>
