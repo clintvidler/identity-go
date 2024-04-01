@@ -9,6 +9,7 @@ import { isNotLoggedInGuard } from './guards/is-not-logged-in.guard';
 import { EditComponent } from './private/user/edit/edit.component';
 import { ViewComponent } from './private/user/view/view.component';
 import { LogoutComponent } from './private/user/logout/logout.component';
+import { RegisterComponent } from './public/register/register.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -34,6 +35,11 @@ export const routes: Routes = [
       {
         path: 'login',
         component: LoginComponent,
+        canActivate: [isNotLoggedInGuard],
+      },
+      {
+        path: 'register',
+        component: RegisterComponent,
         canActivate: [isNotLoggedInGuard],
       },
       { path: 'logout', component: LogoutComponent },

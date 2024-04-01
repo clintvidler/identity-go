@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   FormControl,
   FormGroup,
@@ -23,6 +23,7 @@ import { LoginCredential } from '../../interfaces/user';
     EmailInputComponent,
     PasswordInputComponent,
     SubmitInputComponent,
+    RouterLink,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
