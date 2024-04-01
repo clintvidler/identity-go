@@ -25,7 +25,6 @@ export const routes: Routes = [
           { path: 'view', component: ViewComponent },
         ],
       },
-      { path: 'logout', component: LogoutComponent },
     ],
   },
   {
@@ -37,6 +36,7 @@ export const routes: Routes = [
         component: LoginComponent,
         canActivate: [isNotLoggedInGuard],
       },
+      { path: 'logout', component: LogoutComponent },
     ],
   },
 ];
