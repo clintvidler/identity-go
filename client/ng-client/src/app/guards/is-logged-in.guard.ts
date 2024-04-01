@@ -18,7 +18,7 @@ export class IsLoggedInService {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.identityService.currentUser().pipe(
+    return this.identityService.knownUser().pipe(
       map((res: User) => {
         this.identityService.user = res;
 

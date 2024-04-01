@@ -18,9 +18,9 @@ export class IsNotLoggedInService {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.identityService.currentUser().pipe(
+    return this.identityService.knownUser().pipe(
       map((res: User) => {
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/user']);
 
         return of(false);
       }),

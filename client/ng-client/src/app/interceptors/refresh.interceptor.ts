@@ -31,7 +31,7 @@ export class RefreshService {
     req: HttpRequest<any>,
     next: HttpHandlerFn
   ): Observable<HttpEvent<any>> {
-    console.warn('refreshInterceptor()intercept()');
+    // console.warn('refreshInterceptor()intercept()');
 
     return next(req).pipe(
       catchError((err) => {
@@ -39,10 +39,10 @@ export class RefreshService {
         if (
           // [401].includes(err.status)
           [500].includes(err.status) &&
-          err?.error?.message == 'Token is expired'
+          err?.error?.message == 'Access token: Token is expired'
           //  && this.localStorageService.getItem('refreshToken')
         ) {
-          console.warn(err?.error?.message);
+          // console.warn(err?.error?.message);
           return this.handleRefresh(req, next);
         }
 
@@ -52,7 +52,7 @@ export class RefreshService {
   }
 
   handleRefresh(req: HttpRequest<any>, next: HttpHandlerFn): Observable<any> {
-    console.warn('RefreshInterceptor().handleRefresh()');
+    // console.warn('RefreshInterceptor().handleRefresh()');
 
     if (this.isRefreshing) {
       return this.refreshed.pipe(
@@ -69,14 +69,13 @@ export class RefreshService {
 
     return this.identityService.refreshToken().pipe(
       concatMap((res) => {
-        console.warn('refreshToken()Success');
+        // console.warn('refreshToken()Success');
         this.refreshed.next(true);
 
         return next(req);
       }),
       catchError((err) => {
-        console.warn('refreshToken()Error');
-        console.warn(err);
+        // console.warn('refreshToken()Error');
         // this.localStorageService.removeItem('refreshToken');
 
         return throwError(() => new Error(err));
@@ -89,7 +88,7 @@ export class RefreshService {
 }
 
 export const refreshInterceptor: HttpInterceptorFn = (req, next) => {
-  console.warn('refreshInterceptor()');
+  // console.warn('refreshInterceptor()');
 
   // return next(req);
 

@@ -21,14 +21,11 @@ export class IdentityService {
   httpOptions: Object = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      // 'Grpc-Metadata-Access':
-      //   'eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiIxMjcuMC4wLjE6NTQxMTgiLCJleHAiOjE3MTE4Mzc4ODQsInN1YiI6IjEifQ.CaIrFNG-v2bcIaJk29HfSNbDJy6YqGH-VqtJ3C0w6o4MXH34W6hKkzUcnHOG3aYybZ0kQUKaPfxi65YuzYh8zdXaraxaVEh_N7V6IloMsBS9knVXZGFR6KhYuRxEUull9HlKJxI4TUO60laQdySRQkGZuKBen2GhmmPAheLw7vnz_bILQV4rLfy9xMgTbCuk2xJ2hG5272v6TcMMTwewVsbdTDwsDN4rUrVhGy5jBMTKqtZchfw3jobgOYQasGQisfcEMUSDZaluTlAFHZThw-YqgRqFlVHKVRP4rbNehUKSyPZmlyICUsC2-2Z1P5dkwdLvwAsCmDx0LJdibrDAGFDn76C5IeqF0J8S-wAUkrBg6Cecu3F8eF7RbR10eIKLiF6jo5cd51Bk15CDYa3EXX260AkyZjxE_YXOf8hvPs9xUjbKDodlW1Rxpie146xj31aUCEKZ_Tcss-dIgMKP-3krZ9fSrqDES7hVsGACg_PE2c-lNbQxdtPC-3QEuxh3wwKGuPnEKr4TbSkjVgfhD5wczs4HPdtcFpG8Zs1UwNc5E5_zE8SX97zlLr8f3t9r_ENqUIDcLUx9ScTyslDTOAphXOjIMwt_FEJocfe0GS_ej7RBctwc6m6tNp0QKkKN0YFXvarR5NZIL7Uvjz1BOmBtAkU21Ujw7RDglaOaw74'
     }),
     observe: 'response',
   };
 
   // Current user
-
   private userSubject = new BehaviorSubject<User | null>(null);
 
   get user(): User | null {
@@ -39,8 +36,7 @@ export class IdentityService {
     this.userSubject.next(user);
   }
 
-  // TODO: profile and current user are the same, do I keep both for future changability?
-
+  // TODO: this is currently doing the same as the knownUser method, these probably need different endpoints on the backend
   profile(): Observable<User> {
     return this.http
       .get<User>(`${environment.server}/user`, this.httpOptions)
@@ -55,24 +51,12 @@ export class IdentityService {
       ) as Observable<User>;
   }
 
-  currentUser(): Observable<User> {
-    // return this.http
-    //   .get<User>(`${environment.server}/current-user`, this.httpOptions)
-    //   .pipe(
-    //     map((res: any) => {
-    //       console.warn(res);
-    //       return res.body as User;
-    //     }),
-    //     catchError(err => {
-    //       return null as any;
-    //     })
-    //   ) as Observable<User>;
-
+  // To check if the user is known, used by the is/not logged in guards
+  knownUser(): Observable<User> {
     return this.http
       .get<User>(`${environment.server}/user`, this.httpOptions)
       .pipe(
         map((res: any) => {
-          console.warn(res);
           return res.body as User;
         }),
         catchError((err) => {
@@ -82,8 +66,7 @@ export class IdentityService {
       ) as Observable<User>;
   }
 
-  // Login
-
+  // Login: save JWTs to cookies
   login(data: LoginCredential): Observable<any> {
     return this.http
       .post<Response>(`${environment.server}/login`, data, this.httpOptions)
@@ -93,8 +76,8 @@ export class IdentityService {
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          this.cookieService.set('at', accessToken);
-          this.cookieService.set('rt', refreshToken);
+          this.cookieService.set('access', accessToken);
+          this.cookieService.set('refresh', refreshToken);
 
           return res;
         }),
@@ -102,8 +85,7 @@ export class IdentityService {
       );
   }
 
-  // Refresh token
-
+  // Refresh token: The refresh interceptor uses this method to exchange a saved refresh token for a new refresh token and access token
   refreshToken(): Observable<any> {
     return this.http
       .get<Response>(
@@ -115,16 +97,12 @@ export class IdentityService {
       .pipe(
         map((res) => {
           // this.localStorage.setItem('refreshToken', res.body);
-
           var accessToken = res.headers.get('grpc-metadata-access-token') || '';
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          console.warn('New AT: ', accessToken);
-          console.warn('New RT: ', refreshToken);
-
-          this.cookieService.set('at', accessToken);
-          this.cookieService.set('rt', refreshToken);
+          this.cookieService.set('access', accessToken);
+          this.cookieService.set('refresh', refreshToken);
 
           return res;
         })

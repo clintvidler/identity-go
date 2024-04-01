@@ -5,10 +5,10 @@ import (
 	"errors"
 	"fmt"
 	"log"
-	"strings"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
 	"github.com/clintvidler/identity-go/service/util"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
@@ -45,19 +45,15 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 
 	var access string
 
-	if md["grpcgateway-cookie"] != nil {
-		cookies := make(map[string]string)
-		for _, e := range strings.Split(md.Get("grpcgateway-cookie")[0], "; ") {
-			parts := strings.Split(e, "=")
-			cookies[parts[0]] = parts[1]
+	access, err = util.GetCookie(md, "access")
+	if err != nil {
+		if len(md.Get("access")) > 0 {
+			access = md.Get("access")[0]
 		}
-		access = cookies["at"]
-	} else {
-		// Read the access token from the metadata
-		if len(md.Get("access")) < 1 {
-			return nil, errors.New("no access token")
-		}
-		access = md.Get("access")[0]
+	}
+
+	if access == "" {
+		return nil, errors.New("no access token")
 	}
 
 	// Access the IdentityService struct

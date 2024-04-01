@@ -4,19 +4,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"log"
-	"strings"
 
 	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+	"github.com/clintvidler/identity-go/service/util"
+
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
 func (s *IdentityService) Refresh(ctx context.Context, req *proto.RefreshRequest) (*proto.RefreshReponse, error) {
-	log.Println("Refreshing token...")
-
-	// /
-
 	// Read the metadata
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
@@ -25,25 +21,16 @@ func (s *IdentityService) Refresh(ctx context.Context, req *proto.RefreshRequest
 
 	var refresh string
 
-	if md["grpcgateway-cookie"] != nil {
-		// log.Println(md["grpcgateway-cookie"])
-		cookies := make(map[string]string)
-		for _, e := range strings.Split(md.Get("grpcgateway-cookie")[0], "; ") {
-			parts := strings.Split(e, "=")
-			cookies[parts[0]] = parts[1]
+	refresh, err := util.GetCookie(md, "refresh")
+	if err != nil {
+		if len(md.Get("refresh")) > 0 {
+			refresh = md.Get("refresh")[0]
 		}
-		refresh = cookies["rt"]
-	} else {
-		// Read the token from the metadata
-		if len(md.Get("refresh")) < 1 {
-			return nil, errors.New("no refresh token")
-		}
-		refresh = md.Get("refresh")[0]
 	}
 
-	log.Println(refresh)
-
-	// /
+	if refresh == "" {
+		return nil, errors.New("no refresh token")
+	}
 
 	// Validate token
 	claims, err := s.ParseClaims(fmt.Sprint(refresh))
