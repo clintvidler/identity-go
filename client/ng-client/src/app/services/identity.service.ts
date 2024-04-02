@@ -76,8 +76,8 @@ export class IdentityService {
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          this.cookieService.set('access', accessToken);
-          this.cookieService.set('refresh', refreshToken);
+          this.cookieService.set('access', accessToken, { path: '/' });
+          this.cookieService.set('refresh', refreshToken, { path: '/' });
 
           return res;
         }),
@@ -101,8 +101,8 @@ export class IdentityService {
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          this.cookieService.set('access', accessToken);
-          this.cookieService.set('refresh', refreshToken);
+          this.cookieService.set('access', accessToken, { path: '/' });
+          this.cookieService.set('refresh', refreshToken, { path: '/' });
 
           return res;
         })
@@ -113,8 +113,8 @@ export class IdentityService {
   logout(): Observable<void> {
     const refreshToken = this.cookieService.get('refresh');
 
-    this.cookieService.delete('access');
-    this.cookieService.delete('refresh');
+    this.cookieService.delete('access', '/');
+    this.cookieService.delete('refresh', '/');
 
     return this.http
       .post<void>(
