@@ -137,6 +137,30 @@ export class IdentityService {
       );
   }
 
+  register(data: any): Observable<any> {
+    return this.http
+      .post<Response>(`${environment.server}/register`, data, this.httpOptions)
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError(this.handleError<any[]>('register', []))
+      );
+  }
+
+  pendingRegister(key: string): Observable<Response> {
+    return this.http.get<Response>(
+      `${environment.server}/register/${key}`,
+      this.httpOptions
+    );
+  }
+
+  finishRegistration(data: any, key: string): Observable<any> {
+    return this.http
+      .post(`${environment.server}/register/${key}`, data, this.httpOptions)
+      .pipe(tap((result) => console.log(result)));
+  }
+
   /**
    * Handle Http operation that failed.
    * Let the app continue.
