@@ -10,12 +10,13 @@ import (
 )
 
 type User struct {
-	Id        uint      `json:"id"`
-	Email     string    `json:"email"`
-	Password  string    `json:"-"`
-	UpdatedAt time.Time `json:"-"`
-	CreatedAt time.Time `json:"-"`
-	ExpiredAt time.Time `json:"-"`
+	Id          uint      `json:"id"`
+	DisplayName string    `json:"display_name"`
+	Email       string    `json:"email"`
+	Password    string    `json:"-"`
+	UpdatedAt   time.Time `json:"-"`
+	CreatedAt   time.Time `json:"-"`
+	ExpiredAt   time.Time `json:"-"`
 }
 
 type UserProvider struct {

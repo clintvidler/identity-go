@@ -10,6 +10,7 @@ import { EditComponent } from './private/user/edit/edit.component';
 import { ViewComponent } from './private/user/view/view.component';
 import { LogoutComponent } from './private/user/logout/logout.component';
 import { RegisterComponent } from './public/register/register.component';
+import { PendingComponent as RegisterPendingComponent } from './public/register/pending/pending.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: '/login' },
@@ -41,6 +42,12 @@ export const routes: Routes = [
         path: 'register',
         component: RegisterComponent,
         canActivate: [isNotLoggedInGuard],
+      },
+      {
+        path: 'register/:key',
+        component: RegisterPendingComponent,
+        canActivate: [isNotLoggedInGuard],
+        // canActivate: [pendingRegistrationGuard],
       },
       { path: 'logout', component: LogoutComponent },
     ],

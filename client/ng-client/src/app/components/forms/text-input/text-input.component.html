@@ -1,0 +1,22 @@
+<div class="form-control" *ngIf="control">
+  <label
+    [for]="inputId"
+    *ngIf="label"
+    class="block mt-4 mb-2 text-xs font-medium"
+    >{{ label }}</label
+  >
+  <div class="relative">
+    <input
+      [required]="isRequired"
+      type="text"
+      [id]="inputId"
+      [placeholder]="placeholder"
+      [formControl]="control"
+      class="bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-300 text-sm rounded-lg block w-full ps-10 p-2.5 placeholder-gray-500 dark:placeholder-gray-400"
+    />
+  </div>
+  <app-validation-errors
+    [errors]="control.errors"
+    [customErrorMessages]="customErrorMessages"
+  ></app-validation-errors>
+</div>

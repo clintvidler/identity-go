@@ -76,8 +76,8 @@ export class IdentityService {
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          this.cookieService.set('access', accessToken);
-          this.cookieService.set('refresh', refreshToken);
+          this.cookieService.set('access', accessToken, { path: '/' });
+          this.cookieService.set('refresh', refreshToken, { path: '/' });
 
           return res;
         }),
@@ -101,8 +101,8 @@ export class IdentityService {
           var refreshToken =
             res.headers.get('grpc-metadata-refresh-token') || '';
 
-          this.cookieService.set('access', accessToken);
-          this.cookieService.set('refresh', refreshToken);
+          this.cookieService.set('access', accessToken, { path: '/' });
+          this.cookieService.set('refresh', refreshToken, { path: '/' });
 
           return res;
         })
@@ -113,8 +113,8 @@ export class IdentityService {
   logout(): Observable<void> {
     const refreshToken = this.cookieService.get('refresh');
 
-    this.cookieService.delete('access');
-    this.cookieService.delete('refresh');
+    this.cookieService.delete('access', '/');
+    this.cookieService.delete('refresh', '/');
 
     return this.http
       .post<void>(
@@ -135,6 +135,30 @@ export class IdentityService {
         }),
         tap((res) => this.handleError<any[]>('logoutRequest', [res]))
       );
+  }
+
+  register(data: any): Observable<any> {
+    return this.http
+      .post<Response>(`${environment.server}/register`, data, this.httpOptions)
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        catchError(this.handleError<any[]>('register', []))
+      );
+  }
+
+  pendingRegister(key: string): Observable<Response> {
+    return this.http.get<Response>(
+      `${environment.server}/register/${key}`,
+      this.httpOptions
+    );
+  }
+
+  finishRegistration(data: any, key: string): Observable<any> {
+    return this.http
+      .post(`${environment.server}/register/${key}`, data, this.httpOptions)
+      .pipe(tap((result) => console.log(result)));
   }
 
   /**
