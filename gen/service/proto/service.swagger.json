@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "title": "proto/service.proto",
+    "title": "service/proto/service.proto",
     "version": "version not set"
   },
   "tags": [
@@ -99,7 +99,7 @@
         },
         "parameters": [
           {
-            "name": "RefreshToken",
+            "name": "refreshToken",
             "in": "query",
             "required": false,
             "type": "string"
@@ -246,7 +246,7 @@
     "protoCurrentUserReponse": {
       "type": "object",
       "properties": {
-        "Uid": {
+        "uid": {
           "type": "string"
         }
       }
@@ -257,10 +257,10 @@
     "protoLoginRequest": {
       "type": "object",
       "properties": {
-        "Email": {
+        "email": {
           "type": "string"
         },
-        "Password": {
+        "password": {
           "type": "string"
         }
       }
@@ -271,7 +271,7 @@
     "protoLogoutRequest": {
       "type": "object",
       "properties": {
-        "RefreshToken": {
+        "refreshToken": {
           "type": "string"
         }
       }
