@@ -51,22 +51,22 @@ service IdentityService {
 
 message CurrentUserRequest {}
 message CurrentUserReponse {
-	string Uid = 1;
+	string uid = 1;
 }
 
 message LoginRequest {
-	string Email = 1;
-	string Password = 2;
+	string email = 1;
+	string password = 2;
 }
 message LoginReponse {}
 
 message LogoutRequest {
-  string RefreshToken = 1;
+  string refresh_token = 1;
 }
 message LogoutReponse {}
 
 message RefreshRequest {
-  string RefreshToken = 1;
+  string refresh_token = 1;
 }
 message RefreshReponse {}
 

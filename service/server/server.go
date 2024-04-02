@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+	"github.com/clintvidler/identity-go/gen/go/service/proto"
 	"github.com/clintvidler/identity-go/service/data"
 	"github.com/clintvidler/identity-go/service/rpc"
 
@@ -68,7 +68,7 @@ func (s *Server) Serve() {
 
 	// Mount the docs
 	mux.HandleFunc("/swagger.json", func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "./gen/proto/service.swagger.json")
+		http.ServeFile(w, r, "./gen/service/proto/service.swagger.json")
 	})
 	mux.Handle("/docs", openapiMW.Redoc(openapiMW.RedocOpts{SpecURL: "/swagger.json", Path: "docs"}, nil))
 

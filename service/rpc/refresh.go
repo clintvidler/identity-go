@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+	"github.com/clintvidler/identity-go/gen/go/service/proto"
 	"github.com/clintvidler/identity-go/service/util"
 
 	"google.golang.org/grpc"

@@ -4,7 +4,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/clintvidler/identity-go/gen/proto/go/proto"
+	"github.com/clintvidler/identity-go/gen/go/service/proto"
 	"github.com/clintvidler/identity-go/service/data"
 )
 
