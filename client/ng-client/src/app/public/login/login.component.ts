@@ -47,7 +47,7 @@ export class LoginComponent {
     let email = this.loginForm.value.email || '';
     let password = this.loginForm.value.password || '';
 
-    const lc: LoginCredential = { Email: email, Password: password };
+    const lc: LoginCredential = { email: email, password: password };
 
     this.identityService.login(lc).subscribe((res) => {
       switch (res?.status) {

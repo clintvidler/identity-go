@@ -4,6 +4,6 @@ export interface User {
 }
 
 export interface LoginCredential {
-  Email: string;
-  Password: string;
+  email: string;
+  password: string;
 }
