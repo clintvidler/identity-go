@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package emails;
+
+option go_package = ".";
+
+service Email {
+  rpc Send(EmailSendRequest) returns (EmailSendResponse){}
+}
+
+message ResponseRequest {
+  string msg = 1;
+}
+
+message EmailSendRequest {
+	string from = 1;
+	string to = 2;
+	string body = 3;
+	string subject = 4;
+}
+
+message EmailSendResponse {
+  bool success = 1;
+}

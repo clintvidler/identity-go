@@ -10,6 +10,7 @@ import (
 	"github.com/clintvidler/identity-go/app/data"
 	"github.com/clintvidler/identity-go/app/rpc"
 	proto "github.com/clintvidler/identity-go/gen/proto/server"
+	"github.com/clintvidler/identity-go/services"
 
 	openapiMW "github.com/go-openapi/runtime/middleware"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
@@ -19,10 +20,11 @@ import (
 
 type Server struct {
 	ds *data.Store
+	ec *services.EmailClient
 }
 
-func NewServer(ds *data.Store) *Server {
-	return &Server{ds: ds}
+func NewServer(ds *data.Store, ec *services.EmailClient) *Server {
+	return &Server{ds: ds, ec: ec}
 }
 
 func streamInterceptor(srv any, ss grpc.ServerStream, info *grpc.StreamServerInfo, handler grpc.StreamHandler) error {
@@ -35,7 +37,7 @@ func (s *Server) Serve() {
 		grpc.UnaryInterceptor(rpc.IsAuthInterceptor),
 		grpc.StreamInterceptor(streamInterceptor),
 	)
-	proto.RegisterIdentityServiceServer(grpcServer, rpc.NewIdentityService(s.ds))
+	proto.RegisterIdentityServiceServer(grpcServer, rpc.NewIdentityService(s.ds, s.ec))
 
 	// Start serving gRPC on port 9090
 	lis, err := net.Listen("tcp", ":9090")

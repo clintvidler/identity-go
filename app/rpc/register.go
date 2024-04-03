@@ -3,7 +3,8 @@ package rpc
 import (
 	"context"
 	"fmt"
-	"log"
+	"os"
+	"strings"
 
 	"github.com/clintvidler/identity-go/app/data"
 	proto "github.com/clintvidler/identity-go/gen/proto/server"
@@ -15,9 +16,11 @@ func (s IdentityService) RegisterStart(ctx context.Context, req *proto.RegisterS
 		return nil, err
 	}
 
-	log.Println("Confirmation key:", key)
-
-	// TODO: Send email
+	emailTo := req.Email
+	emailFrom := "no-reply@" + strings.Split(os.Getenv("FRONTEND_URL"), ":")[0]
+	emailSubject := "Confirm your account"
+	emailBody := "http://" + os.Getenv("FRONTEND_URL") + "/register/" + key + "\n\nExpires in 24 hours."
+	s.emailClient.SendEmail(emailTo, emailFrom, emailSubject, emailBody)
 
 	return &proto.RegisterStartReponse{}, nil
 }
@@ -47,7 +50,12 @@ func (s IdentityService) RegisterFinish(ctx context.Context, req *proto.Register
 		return nil, err
 	}
 
-	// TODO: Send email
+	emailTo := email
+	emailFrom := "no-reply@" + strings.Split(os.Getenv("FRONTEND_URL"), ":")[0]
+	emailSubject := "Welcome, account confirmed"
+	emailBody := "http://" + os.Getenv("FRONTEND_URL") + "/login"
+
+	s.emailClient.SendEmail(emailTo, emailFrom, emailSubject, emailBody)
 
 	return &proto.RegisterFinishReponse{Id: fmt.Sprint(id)}, nil
 }

@@ -5,6 +5,7 @@ import (
 
 	"github.com/clintvidler/identity-go/app/data"
 	"github.com/clintvidler/identity-go/app/server"
+	"github.com/clintvidler/identity-go/services"
 )
 
 func main() {
@@ -17,5 +18,7 @@ func main() {
 		panic(err)
 	}
 
-	server.NewServer(ds).Serve()
+	ec := services.NewEmailClient("host.docker.internal", "7399")
+
+	server.NewServer(ds, ec).Serve()
 }
