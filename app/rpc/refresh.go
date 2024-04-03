@@ -5,8 +5,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
-	"github.com/clintvidler/identity-go/service/util"
+	"github.com/clintvidler/identity-go/app/util"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"

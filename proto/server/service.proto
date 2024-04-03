@@ -2,8 +2,10 @@ syntax = "proto3";
 
 package proto;
 
-import "google/api/annotations.proto";
-import "google/protobuf/empty.proto";
+// This import requires the files to be locally available
+import "proto/google/api/annotations.proto";
+
+// import "google/protobuf/empty.proto";
 
 option go_package = "grpc-go/gen/proto/go/proto;proto";
 

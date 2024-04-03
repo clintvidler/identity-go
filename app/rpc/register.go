@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
-	"github.com/clintvidler/identity-go/service/data"
+	"github.com/clintvidler/identity-go/app/data"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 )
 
 func (s IdentityService) RegisterStart(ctx context.Context, req *proto.RegisterStartRequest) (*proto.RegisterStartReponse, error) {

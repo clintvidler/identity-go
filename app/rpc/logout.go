@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 )
 
 // Logout:

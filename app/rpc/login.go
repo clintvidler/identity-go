@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
