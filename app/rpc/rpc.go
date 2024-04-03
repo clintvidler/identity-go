@@ -6,16 +6,18 @@ import (
 
 	"github.com/clintvidler/identity-go/app/data"
 	proto "github.com/clintvidler/identity-go/gen/proto/server"
+	"github.com/clintvidler/identity-go/services"
 )
 
 type IdentityService struct {
 	*proto.UnimplementedIdentityServiceServer
-	data   *data.Store
-	prvKey []byte
-	pubKey []byte
+	data        *data.Store
+	emailClient *services.EmailClient
+	prvKey      []byte
+	pubKey      []byte
 }
 
-func NewIdentityService(ds *data.Store) *IdentityService {
+func NewIdentityService(ds *data.Store, ec *services.EmailClient) *IdentityService {
 	prvKey, err := os.ReadFile("cert/id_rsa")
 
 	if err != nil {
@@ -28,5 +30,5 @@ func NewIdentityService(ds *data.Store) *IdentityService {
 		log.Printf("Error: %s", err)
 	}
 
-	return &IdentityService{data: ds, prvKey: prvKey, pubKey: pubKey}
+	return &IdentityService{data: ds, emailClient: ec, prvKey: prvKey, pubKey: pubKey}
 }

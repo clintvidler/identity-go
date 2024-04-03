@@ -18,6 +18,7 @@ services:
       DB_TEST_PORT: ${DB_TEST_PORT}
       ACCESS_TOKEN_DURATION: ${ACCESS_TOKEN_DURATION}
       REFRESH_TOKEN_DURATION: ${REFRESH_TOKEN_DURATION}
+      FRONTEND_URL: ${FRONTEND_URL}
       TZ: "Australia/Sydney"
     volumes:
       - ./:/app
