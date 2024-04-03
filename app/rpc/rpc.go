@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
-	"github.com/clintvidler/identity-go/service/data"
+	"github.com/clintvidler/identity-go/app/data"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 )
 
 type IdentityService struct {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/clintvidler/identity-go/gen/go/service/proto"
+	proto "github.com/clintvidler/identity-go/gen/proto/server"
 
 	"github.com/stretchr/testify/assert"
 	"google.golang.org/grpc"

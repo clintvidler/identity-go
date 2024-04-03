@@ -10,9 +10,7 @@ Start the service: `make up`
 
 Update go dependencies: `go mod tidy`
 
-Generate protobuf code: `buf generate`
-
-Update protobuf dependencies: `buf mod update`
+Generate protobuf code: `make protoc`
 
 ## Other commands
 
