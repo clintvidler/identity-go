@@ -32,5 +32,4 @@ export class TextInputComponent<T> extends ControlValueAccessorDirective<T> {
   @Input() inputId: string = 'text-input';
   @Input() label: string = 'Text';
   @Input() placeholder: string = 'Enter text';
-  @Input() customErrorMessages: Record<string, string> = {};
 }

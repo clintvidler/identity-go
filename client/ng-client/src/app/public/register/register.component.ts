@@ -12,6 +12,8 @@ import { IdentityService } from '../../services/identity.service';
 import { EmailInputComponent } from '../../components/forms/email-input/email-input.component';
 import { SubmitInputComponent } from '../../components/forms/submit-input/submit-input.component';
 import { CommonModule } from '@angular/common';
+import { ServerError } from '../../interfaces/server-error';
+import { ServerErrorsComponent } from '../../components/forms/server-errors/server-errors.component';
 
 @Component({
   selector: 'app-register',
@@ -22,6 +24,7 @@ import { CommonModule } from '@angular/common';
     ReactiveFormsModule,
     EmailInputComponent,
     SubmitInputComponent,
+    ServerErrorsComponent,
     RouterLink,
   ],
   templateUrl: './register.component.html',
@@ -34,29 +37,27 @@ export class RegisterComponent {
   ) {}
 
   success = false;
-
-  serverError: string = '';
-
-  errorMessages = {};
+  serverErrors: ServerError[] = [];
 
   registerForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      updateOn: 'blur',
+    }),
   });
 
   onSubmit(): void {
     let email = this.registerForm.value.email || '';
 
+    this.serverErrors = [];
+
     this.identityService.register({ email: email }).subscribe((res) => {
       switch (res?.status) {
         case 200:
-          {
-            this.success = true;
-          }
+          this.success = true;
           break;
         default:
-          this.serverError = res?.error
-            ? res.error
-            : 'unexpected error has occured';
+          this.serverErrors.push(res?.error);
       }
     });
   }

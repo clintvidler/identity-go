@@ -13,6 +13,8 @@ import { PasswordInputComponent } from '../../components/forms/password-input/pa
 import { SubmitInputComponent } from '../../components/forms/submit-input/submit-input.component';
 import { IdentityService } from '../../services/identity.service';
 import { LoginCredential } from '../../interfaces/user';
+import { ServerErrorsComponent } from '../../components/forms/server-errors/server-errors.component';
+import { ServerError } from '../../interfaces/server-error';
 
 @Component({
   selector: 'app-login',
@@ -23,6 +25,7 @@ import { LoginCredential } from '../../interfaces/user';
     EmailInputComponent,
     PasswordInputComponent,
     SubmitInputComponent,
+    ServerErrorsComponent,
     RouterLink,
   ],
   templateUrl: './login.component.html',
@@ -34,13 +37,17 @@ export class LoginComponent {
     private router: Router
   ) {}
 
-  serverError: string = '';
-
-  errorMessages = {};
+  serverErrors: ServerError[] = [];
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', {
+      validators: [Validators.required, Validators.email],
+      updateOn: 'blur',
+    }),
+    password: new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'blur',
+    }),
   });
 
   onSubmit(): void {
@@ -57,9 +64,7 @@ export class LoginComponent {
           }
           break;
         default:
-          this.serverError = res?.error
-            ? res.error
-            : 'unexpected error has occured';
+          this.serverErrors.push(res?.error);
       }
     });
   }

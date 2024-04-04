@@ -35,5 +35,4 @@ export class PasswordInputComponent<
   @Input() label: string = 'Password';
   @Input() placeholder: string = 'Enter your password';
   @Input() sufix: string = 'Lost password?';
-  @Input() customErrorMessages: Record<string, string> = {};
 }

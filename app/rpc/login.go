@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"log"
 
@@ -13,7 +14,10 @@ import (
 )
 
 func (s IdentityService) Login(ctx context.Context, req *proto.LoginRequest) (*proto.LoginReponse, error) {
-	log.Printf("Login(%s, %s)", req.Email, req.Password)
+	// Required fields
+	if req.Email == "" || req.Password == "" {
+		return nil, errors.New("email and password are required")
+	}
 
 	// Find user by email
 	user, err := s.data.User.ReadOne(0, req.Email)

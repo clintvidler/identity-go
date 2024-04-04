@@ -4,17 +4,12 @@
       Register, to get started!
     </h3>
 
-    <!-- <div id="errors" class="text-danger-500 text-sm"></div> -->
+    <app-server-errors [serverErrors]="serverErrors"></app-server-errors>
 
     <app-email-input
       formControlName="email"
-      [customErrorMessages]="errorMessages"
       inputId="register-email-input"
     ></app-email-input>
-
-    <!-- <div *ngIf="registerForm.controls.name.errors?.['required']">
-      Name field is required
-    </div> -->
 
     <app-submit-input></app-submit-input>
   </div>
