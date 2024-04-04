@@ -60,7 +60,6 @@ export class IdentityService {
           return res.body as User;
         }),
         catchError((err) => {
-          console.warn(err);
           return null as any;
         })
       ) as Observable<User>;
@@ -157,8 +156,18 @@ export class IdentityService {
 
   finishRegistration(data: any, key: string): Observable<any> {
     return this.http
-      .post(`${environment.server}/register/${key}`, data, this.httpOptions)
-      .pipe(tap((result) => console.log(result)));
+      .post<Response>(
+        `${environment.server}/register/${key}`,
+        data,
+        this.httpOptions
+      )
+      .pipe(
+        map((res) => {
+          return res;
+        }),
+        // tap((result) => console.log(result)),
+        catchError(this.handleError<any[]>('register', []))
+      );
   }
 
   /**

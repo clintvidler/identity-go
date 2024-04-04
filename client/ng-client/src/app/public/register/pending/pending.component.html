@@ -5,11 +5,10 @@
         Finish setting up your account: <i>{{ email }}</i>
       </h3>
 
-      <!-- <div id="errors" class="text-danger-500 text-sm"></div> -->
+      <app-server-errors [serverErrors]="serverErrors"></app-server-errors>
 
       <app-text-input
         formControlName="display_name"
-        [customErrorMessages]="errorMessages"
         inputId="register-display-name-input"
         label="Display name"
         placeholder="Choose your display name"
@@ -17,15 +16,10 @@
 
       <app-password-input
         formControlName="password"
-        [customErrorMessages]="errorMessages"
         inputId="register-password-input"
         placeholder="Choose your password"
         sufix=""
       ></app-password-input>
-
-      <!-- <div *ngIf="registerForm.controls.name.errors?.['required']">
-        Name field is required
-      </div> -->
 
       <app-submit-input></app-submit-input>
     </div>

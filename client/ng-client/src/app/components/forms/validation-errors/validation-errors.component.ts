@@ -10,22 +10,25 @@ import { CommonModule } from '@angular/common';
 })
 export class ValidationErrorsComponent implements OnChanges {
   @Input() errors: Record<string, string> | null = {};
-  @Input() customErrorMessages: Record<string, string> = {};
 
-  // errorMessages: Record<string, string> = {
-  //   required: 'This field is required',
-  // };
-
-  errorMessages: Record<string, string> = {};
+  changed: boolean = false;
 
   ngOnChanges(changes: SimpleChanges): void {
-    const { customErrorMessages } = changes;
+    Object.keys(changes).forEach((key) => {
+      if (changes[key].previousValue != undefined) {
+        this.changed = !changes[key]?.firstChange;
+      }
+    });
+  }
 
-    if (customErrorMessages) {
-      this.errors = {
-        ...this.errorMessages,
-        ...customErrorMessages.currentValue,
-      };
+  getMessage(key: string) {
+    switch (key) {
+      case 'required':
+        return 'Required';
+      case 'email':
+        return 'Enter a valid email';
+      default:
+        return `Unhandled validation error: ${key}`;
     }
   }
 }

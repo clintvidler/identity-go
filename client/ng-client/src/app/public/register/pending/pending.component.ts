@@ -9,11 +9,12 @@ import {
 } from '@angular/forms';
 
 import { IdentityService } from '../../../services/identity.service';
-import { EmailInputComponent } from '../../../components/forms/email-input/email-input.component';
 import { PasswordInputComponent } from '../../../components/forms/password-input/password-input.component';
 import { SubmitInputComponent } from '../../../components/forms/submit-input/submit-input.component';
 import { CommonModule } from '@angular/common';
 import { TextInputComponent } from '../../../components/forms/text-input/text-input.component';
+import { ServerError } from '../../../interfaces/server-error';
+import { ServerErrorsComponent } from '../../../components/forms/server-errors/server-errors.component';
 
 @Component({
   selector: 'app-pending',
@@ -25,6 +26,7 @@ import { TextInputComponent } from '../../../components/forms/text-input/text-in
     TextInputComponent,
     PasswordInputComponent,
     SubmitInputComponent,
+    ServerErrorsComponent,
     RouterLink,
   ],
   templateUrl: './pending.component.html',
@@ -47,12 +49,17 @@ export class PendingComponent {
   email: string = '';
   hideRegisterPassword = true;
   success = false;
-  serverError: string = '';
-  errorMessages = {};
+  serverErrors: ServerError[] = [];
 
   registerForm = new FormGroup({
-    display_name: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required]),
+    display_name: new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'blur',
+    }),
+    password: new FormControl('', {
+      validators: [Validators.required],
+      updateOn: 'blur',
+    }),
   });
 
   onSubmit(): void {
@@ -61,19 +68,15 @@ export class PendingComponent {
 
     const data: Object = { display_name: display_name, password: password };
 
-    this.identityService
-      .finishRegistration(data, this.key)
-      .subscribe((result) => {
-        switch (result?.status) {
-          case 200:
-            this.success = true;
-            break;
-          default:
-            this.serverError = result.error
-              ? result.error
-              : 'unexpected error has occured';
-        }
-      });
+    this.identityService.finishRegistration(data, this.key).subscribe((res) => {
+      switch (res?.status) {
+        case 200:
+          this.success = true;
+          break;
+        default:
+          this.serverErrors.push(res?.error);
+      }
+    });
   }
 
   get registerFormDisplayName() {

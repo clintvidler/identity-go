@@ -32,5 +32,4 @@ export class EmailInputComponent<T> extends ControlValueAccessorDirective<T> {
   @Input() inputId: string = 'email-input';
   @Input() label: string = 'Email';
   @Input() placeholder: string = 'Enter your email';
-  @Input() customErrorMessages: Record<string, string> = {};
 }

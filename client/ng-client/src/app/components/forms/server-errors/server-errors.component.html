@@ -1,0 +1,8 @@
+<div *ngIf="serverErrors.length > 0" id="errors">
+  <h4 class="text-danger-500 text-sm font-bold">Server errors:</h4>
+  <ul class="list-disc ml-4">
+    <li *ngFor="let err of serverErrors" class="text-danger-500 text-sm my-2">
+      {{ err.message }}
+    </li>
+  </ul>
+</div>

@@ -1,5 +1,5 @@
-<ul class="validation-errors">
+<ul *ngIf="changed" id="validation-errors" class="text-danger-500 text-sm my-2">
   <li *ngFor="let error of errors | keyvalue">
-    {{ error.key }}: {{ error.value }}
+    <span *ngIf="error.value">{{ getMessage(error.key) }}</span>
   </li>
 </ul>

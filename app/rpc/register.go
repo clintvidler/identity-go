@@ -2,6 +2,7 @@ package rpc
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"os"
 	"strings"
@@ -11,11 +12,24 @@ import (
 )
 
 func (s IdentityService) RegisterStart(ctx context.Context, req *proto.RegisterStartRequest) (*proto.RegisterStartReponse, error) {
+	// Required fields
+	if req.Email == "" {
+		return nil, errors.New("email is required")
+	}
+
+	// Email should not already exist
+	_, err := s.data.User.ReadOne(0, req.Email)
+	if err == nil {
+		return nil, errors.New("an account with that email already exists")
+	}
+
+	// Store pending confirmation record for the email
 	key, err := s.data.User.UpsertPendingRegistration(req.Email)
 	if err != nil {
 		return nil, err
 	}
 
+	// Email the registrant their confirmation key
 	emailTo := req.Email
 	emailFrom := "no-reply@" + strings.Split(os.Getenv("FRONTEND_URL"), ":")[0]
 	emailSubject := "Confirm your account"
@@ -35,6 +49,11 @@ func (s IdentityService) RegisterPending(ctx context.Context, req *proto.Registe
 }
 
 func (s IdentityService) RegisterFinish(ctx context.Context, req *proto.RegisterFinishRequest) (*proto.RegisterFinishReponse, error) {
+	// Required fields
+	if req.DisplayName == "" || req.Password == "" {
+		return nil, errors.New("display name and password are required")
+	}
+
 	email, err := s.data.User.ReadPendingRegistration(req.Key)
 	if err != nil {
 		return nil, err
