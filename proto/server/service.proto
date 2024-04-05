@@ -10,6 +10,11 @@ import "proto/google/api/annotations.proto";
 option go_package = "grpc-go/gen/proto/go/proto;proto";
 
 service IdentityService {
+  rpc IsAuth(IsAuthRequest) returns (IsAuthReponse) {
+    option (google.api.http) = {
+      get: "/auth"
+    };
+  }
   rpc CurrentUser(CurrentUserRequest) returns (CurrentUserReponse) {
     option (google.api.http) = {
       get: "/user"
@@ -51,9 +56,19 @@ service IdentityService {
   }
 }
 
+message IsAuthRequest {}
+message IsAuthReponse {
+	string id = 1;
+}
+
 message CurrentUserRequest {}
 message CurrentUserReponse {
-	string uid = 1;
+	string id = 1;
+  string display_name = 2;
+  string email = 3;
+  string created_at = 4;
+  string updated_at = 5;
+  string expired_at = 6;
 }
 
 message LoginRequest {
