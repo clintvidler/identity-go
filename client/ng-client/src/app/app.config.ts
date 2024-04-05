@@ -1,4 +1,4 @@
-import { ApplicationConfig } from '@angular/core';
+import { APP_INITIALIZER, ApplicationConfig } from '@angular/core';
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 
@@ -10,6 +10,7 @@ import {
   RefreshService,
   refreshInterceptor,
 } from './interceptors/refresh.interceptor';
+import { AppInitialiserProvider } from './providers/app-initializer-provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,5 +21,11 @@ export const appConfig: ApplicationConfig = {
     IsLoggedInService,
     IsNotLoggedInService,
     RefreshService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: (p: AppInitialiserProvider) => () => p.load(),
+      deps: [AppInitialiserProvider],
+      multi: true,
+    },
   ],
 };

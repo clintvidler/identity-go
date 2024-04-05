@@ -19,7 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Email_Send_FullMethodName = "/grpc.Email/Send"
+	Email_Send_FullMethodName = "/emails.Email/Send"
 )
 
 // EmailClient is the client API for Email service.
@@ -96,7 +96,7 @@ func _Email_Send_Handler(srv interface{}, ctx context.Context, dec func(interfac
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Email_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "grpc.Email",
+	ServiceName: "emails.Email",
 	HandlerType: (*EmailServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

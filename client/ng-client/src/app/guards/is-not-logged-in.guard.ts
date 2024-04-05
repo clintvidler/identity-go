@@ -8,7 +8,6 @@ import {
 import { Observable, catchError, map, of } from 'rxjs';
 
 import { IdentityService } from '../services/identity.service';
-import { User } from '../interfaces/user';
 
 @Injectable()
 export class IsNotLoggedInService {
@@ -18,8 +17,8 @@ export class IsNotLoggedInService {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<any> {
-    return this.identityService.knownUser().pipe(
-      map((res: User) => {
+    return this.identityService.IsAuth().pipe(
+      map(() => {
         this.router.navigate(['/user']);
 
         return of(false);
@@ -32,7 +31,5 @@ export class IsNotLoggedInService {
 }
 
 export const isNotLoggedInGuard: CanActivateFn = (route, state) => {
-  // console.warn('isNotLoggedInGuard()');
-
   return inject(IsNotLoggedInService).canActivate(route, state);
 };

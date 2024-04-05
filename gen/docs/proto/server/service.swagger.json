@@ -16,6 +16,28 @@
     "application/json"
   ],
   "paths": {
+    "/auth": {
+      "get": {
+        "operationId": "IdentityService_IsAuth",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoIsAuthReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/login": {
       "post": {
         "operationId": "IdentityService_Login",
@@ -246,7 +268,30 @@
     "protoCurrentUserReponse": {
       "type": "object",
       "properties": {
-        "uid": {
+        "id": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "expiredAt": {
+          "type": "string"
+        }
+      }
+    },
+    "protoIsAuthReponse": {
+      "type": "object",
+      "properties": {
+        "id": {
           "type": "string"
         }
       }

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"strconv"
 
 	"github.com/clintvidler/identity-go/app/util"
 	proto "github.com/clintvidler/identity-go/gen/proto/server"
@@ -16,13 +17,38 @@ import (
 type KeyUid struct{}
 type KeyAid struct{}
 
+func (s *IdentityService) IsAuth(ctx context.Context, req *proto.IsAuthRequest) (*proto.IsAuthReponse, error) {
+	return &proto.IsAuthReponse{Id: fmt.Sprint(ctx.Value(KeyUid{}))}, nil
+}
+
 func (s *IdentityService) CurrentUser(ctx context.Context, req *proto.CurrentUserRequest) (*proto.CurrentUserReponse, error) {
-	return &proto.CurrentUserReponse{Uid: fmt.Sprint(ctx.Value(KeyUid{}))}, nil
+	id := fmt.Sprint(ctx.Value(KeyUid{}))
+
+	_id, err := strconv.Atoi(id)
+	if err != nil {
+		return nil, err
+	}
+
+	// Find user by email
+	u, err := s.data.User.ReadOne(uint(_id), "")
+	if err != nil {
+		return nil, err
+	}
+
+	return &proto.CurrentUserReponse{
+		Id:          fmt.Sprint(u.Id),
+		DisplayName: fmt.Sprint(u.DisplayName),
+		Email:       fmt.Sprint(u.Email),
+		UpdatedAt:   fmt.Sprint(u.UpdatedAt),
+		CreatedAt:   fmt.Sprint(u.CreatedAt),
+		ExpiredAt:   fmt.Sprint(u.ExpiredAt),
+	}, nil
 }
 
 func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo, handler grpc.UnaryHandler) (resp any, err error) {
 	// List of methods that require auth
 	protected := []string{
+		"/proto.IdentityService/IsAuth",
 		"/proto.IdentityService/CurrentUser",
 	}
 

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
 
-import { User } from '../../interfaces/user';
 import { IdentityService } from '../../services/identity.service';
 
 @Component({
@@ -15,12 +14,5 @@ import { IdentityService } from '../../services/identity.service';
 export class UserComponent implements OnInit {
   constructor(private identityService: IdentityService) {}
 
-  user: User | null = null;
-
-  ngOnInit(): void {
-    // this.user = this.identityService.user;
-    this.identityService.profile().subscribe((res) => {
-      this.user = res;
-    });
-  }
+  ngOnInit(): void {}
 }

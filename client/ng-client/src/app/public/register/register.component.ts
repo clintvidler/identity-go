@@ -51,7 +51,7 @@ export class RegisterComponent {
 
     this.serverErrors = [];
 
-    this.identityService.register({ email: email }).subscribe((res) => {
+    this.identityService.startRegister({ email: email }).subscribe((res) => {
       switch (res?.status) {
         case 200:
           this.success = true;
