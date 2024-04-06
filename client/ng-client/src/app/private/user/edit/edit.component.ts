@@ -55,7 +55,7 @@ export class EditComponent {
   });
 
   emailForm = new FormGroup({
-    new: new FormControl('', {
+    email: new FormControl('', {
       validators: [Validators.required, Validators.email],
       updateOn: 'blur',
     }),
