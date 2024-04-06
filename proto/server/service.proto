@@ -77,6 +77,12 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc UpdateDisplayName(UpdateDisplayNameRequest) returns (UpdateDisplayNameReponse) {
+    option (google.api.http) = {
+      post: "/update-display-name"
+      body: "*"
+    };
+  }
   rpc UpdateEmailStart(UpdateEmailStartRequest) returns (UpdateEmailStartReponse) {
     option (google.api.http) = {
       post: "/update-email"
@@ -169,6 +175,12 @@ message UpdatePasswordRequest {
   string new = 2;
 }
 message UpdatePasswordReponse {}
+
+// Update display name
+message UpdateDisplayNameRequest {
+  string new = 2;
+}
+message UpdateDisplayNameReponse {}
 
 // Update email
 message UpdateEmailStartRequest {

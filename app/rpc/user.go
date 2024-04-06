@@ -52,6 +52,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		"/proto.IdentityService/CurrentUser",
 		"/proto.IdentityService/UpdatePassword",
 		"/proto.IdentityService/UpdateEmailStart",
+		"/proto.IdentityService/UpdateDisplayName",
 	}
 
 	// Read the method

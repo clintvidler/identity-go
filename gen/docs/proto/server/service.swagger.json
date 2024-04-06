@@ -328,6 +328,38 @@
         ]
       }
     },
+    "/update-display-name": {
+      "post": {
+        "operationId": "IdentityService_UpdateDisplayName",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoUpdateDisplayNameReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoUpdateDisplayNameRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/update-email": {
       "post": {
         "operationId": "IdentityService_UpdateEmailStart",
@@ -576,6 +608,18 @@
         }
       },
       "title": "Reset password"
+    },
+    "protoUpdateDisplayNameReponse": {
+      "type": "object"
+    },
+    "protoUpdateDisplayNameRequest": {
+      "type": "object",
+      "properties": {
+        "new": {
+          "type": "string"
+        }
+      },
+      "title": "Update display name"
     },
     "protoUpdateEmailFinishReponse": {
       "type": "object"
