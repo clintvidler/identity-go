@@ -1,15 +1,16 @@
 syntax = "proto3";
 
-package emails;
+package grpc;
 
 option go_package = ".";
 
 service Email {
-  rpc Send(EmailSendRequest) returns (EmailSendResponse){}
+    rpc Echo(ResponseRequest) returns (ResponseRequest){}
+    rpc Send(EmailSendRequest) returns (EmailSendResponse){}
 }
 
 message ResponseRequest {
-  string msg = 1;
+    string msg = 1;
 }
 
 message EmailSendRequest {
@@ -20,5 +21,5 @@ message EmailSendRequest {
 }
 
 message EmailSendResponse {
-  bool success = 1;
+    bool success = 1;
 }

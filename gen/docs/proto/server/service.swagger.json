@@ -230,6 +230,104 @@
         ]
       }
     },
+    "/reset-password": {
+      "post": {
+        "operationId": "IdentityService_ResetPasswordStart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoResetPasswordStartReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoResetPasswordStartRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
+    "/reset-password/{key}": {
+      "get": {
+        "operationId": "IdentityService_ResetPasswordPending",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoResetPasswordPendingReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      },
+      "post": {
+        "operationId": "IdentityService_ResetPasswordFinish",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoResetPasswordFinishReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/IdentityServiceResetPasswordFinishBody"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/user": {
       "get": {
         "operationId": "IdentityService_CurrentUser",
@@ -260,6 +358,14 @@
         "displayName": {
           "type": "string"
         },
+        "password": {
+          "type": "string"
+        }
+      }
+    },
+    "IdentityServiceResetPasswordFinishBody": {
+      "type": "object",
+      "properties": {
         "password": {
           "type": "string"
         }
@@ -308,7 +414,8 @@
         "password": {
           "type": "string"
         }
-      }
+      },
+      "title": "Login"
     },
     "protoLogoutReponse": {
       "type": "object"
@@ -319,7 +426,8 @@
         "refreshToken": {
           "type": "string"
         }
-      }
+      },
+      "title": "Logout"
     },
     "protoRefreshReponse": {
       "type": "object"
@@ -349,7 +457,31 @@
         "email": {
           "type": "string"
         }
+      },
+      "title": "Register"
+    },
+    "protoResetPasswordFinishReponse": {
+      "type": "object"
+    },
+    "protoResetPasswordPendingReponse": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
       }
+    },
+    "protoResetPasswordStartReponse": {
+      "type": "object"
+    },
+    "protoResetPasswordStartRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "Reset password"
     },
     "protobufAny": {
       "type": "object",

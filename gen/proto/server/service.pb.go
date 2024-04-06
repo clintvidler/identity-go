@@ -21,6 +21,7 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
+// Is authenticated
 type IsAuthRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -106,6 +107,7 @@ func (x *IsAuthReponse) GetId() string {
 	return ""
 }
 
+// Current user
 type CurrentUserRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -231,6 +233,7 @@ func (x *CurrentUserReponse) GetExpiredAt() string {
 	return ""
 }
 
+// Login
 type LoginRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -324,6 +327,7 @@ func (*LoginReponse) Descriptor() ([]byte, []int) {
 	return file_proto_server_service_proto_rawDescGZIP(), []int{5}
 }
 
+// Logout
 type LogoutRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -409,6 +413,7 @@ func (*LogoutReponse) Descriptor() ([]byte, []int) {
 	return file_proto_server_service_proto_rawDescGZIP(), []int{7}
 }
 
+// Refresh
 type RefreshRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -494,6 +499,7 @@ func (*RefreshReponse) Descriptor() ([]byte, []int) {
 	return file_proto_server_service_proto_rawDescGZIP(), []int{9}
 }
 
+// Register
 type RegisterStartRequest struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -783,6 +789,279 @@ func (x *RegisterFinishReponse) GetId() string {
 	return ""
 }
 
+// Reset password
+type ResetPasswordStartRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+}
+
+func (x *ResetPasswordStartRequest) Reset() {
+	*x = ResetPasswordStartRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordStartRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordStartRequest) ProtoMessage() {}
+
+func (x *ResetPasswordStartRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordStartRequest.ProtoReflect.Descriptor instead.
+func (*ResetPasswordStartRequest) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *ResetPasswordStartRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type ResetPasswordStartReponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ResetPasswordStartReponse) Reset() {
+	*x = ResetPasswordStartReponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordStartReponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordStartReponse) ProtoMessage() {}
+
+func (x *ResetPasswordStartReponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordStartReponse.ProtoReflect.Descriptor instead.
+func (*ResetPasswordStartReponse) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{17}
+}
+
+type ResetPasswordPendingRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Key string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+}
+
+func (x *ResetPasswordPendingRequest) Reset() {
+	*x = ResetPasswordPendingRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordPendingRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordPendingRequest) ProtoMessage() {}
+
+func (x *ResetPasswordPendingRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordPendingRequest.ProtoReflect.Descriptor instead.
+func (*ResetPasswordPendingRequest) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *ResetPasswordPendingRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+type ResetPasswordPendingReponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Email string `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+}
+
+func (x *ResetPasswordPendingReponse) Reset() {
+	*x = ResetPasswordPendingReponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordPendingReponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordPendingReponse) ProtoMessage() {}
+
+func (x *ResetPasswordPendingReponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordPendingReponse.ProtoReflect.Descriptor instead.
+func (*ResetPasswordPendingReponse) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *ResetPasswordPendingReponse) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+type ResetPasswordFinishRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Key      string `protobuf:"bytes,1,opt,name=key,proto3" json:"key,omitempty"`
+	Password string `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+}
+
+func (x *ResetPasswordFinishRequest) Reset() {
+	*x = ResetPasswordFinishRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[20]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordFinishRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordFinishRequest) ProtoMessage() {}
+
+func (x *ResetPasswordFinishRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[20]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordFinishRequest.ProtoReflect.Descriptor instead.
+func (*ResetPasswordFinishRequest) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *ResetPasswordFinishRequest) GetKey() string {
+	if x != nil {
+		return x.Key
+	}
+	return ""
+}
+
+func (x *ResetPasswordFinishRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type ResetPasswordFinishReponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *ResetPasswordFinishReponse) Reset() {
+	*x = ResetPasswordFinishReponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_proto_server_service_proto_msgTypes[21]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *ResetPasswordFinishReponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ResetPasswordFinishReponse) ProtoMessage() {}
+
+func (x *ResetPasswordFinishReponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_server_service_proto_msgTypes[21]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ResetPasswordFinishReponse.ProtoReflect.Descriptor instead.
+func (*ResetPasswordFinishReponse) Descriptor() ([]byte, []int) {
+	return file_proto_server_service_proto_rawDescGZIP(), []int{21}
+}
+
 var File_proto_server_service_proto protoreflect.FileDescriptor
 
 var file_proto_server_service_proto_rawDesc = []byte{
@@ -840,7 +1119,25 @@ var file_proto_server_service_proto_rawDesc = []byte{
 	0x52, 0x08, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0x27, 0x0a, 0x15, 0x52, 0x65,
 	0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x70, 0x6f,
 	0x6e, 0x73, 0x65, 0x12, 0x0e, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
-	0x02, 0x69, 0x64, 0x32, 0xba, 0x05, 0x0a, 0x0f, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79,
+	0x02, 0x69, 0x64, 0x22, 0x31, 0x0a, 0x19, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73,
+	0x77, 0x6f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x22, 0x1b, 0x0a, 0x19, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x52, 0x65, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x2f, 0x0a, 0x1b, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73,
+	0x77, 0x6f, 0x72, 0x64, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x03, 0x6b, 0x65, 0x79, 0x22, 0x33, 0x0a, 0x1b, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73,
+	0x73, 0x77, 0x6f, 0x72, 0x64, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x12, 0x14, 0x0a, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x05, 0x65, 0x6d, 0x61, 0x69, 0x6c, 0x22, 0x4a, 0x0a, 0x1a, 0x52, 0x65, 0x73,
+	0x65, 0x74, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68,
+	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x10, 0x0a, 0x03, 0x6b, 0x65, 0x79, 0x18, 0x01,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x6b, 0x65, 0x79, 0x12, 0x1a, 0x0a, 0x08, 0x70, 0x61, 0x73,
+	0x73, 0x77, 0x6f, 0x72, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x08, 0x70, 0x61, 0x73,
+	0x73, 0x77, 0x6f, 0x72, 0x64, 0x22, 0x1c, 0x0a, 0x1a, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61,
+	0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x32, 0xae, 0x08, 0x0a, 0x0f, 0x49, 0x64, 0x65, 0x6e, 0x74, 0x69, 0x74, 0x79,
 	0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x43, 0x0a, 0x06, 0x49, 0x73, 0x41, 0x75, 0x74,
 	0x68, 0x12, 0x14, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x49, 0x73, 0x41, 0x75, 0x74, 0x68,
 	0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x14, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e,
@@ -884,9 +1181,32 @@ var file_proto_server_service_proto_rawDesc = []byte{
 	0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x14, 0x3a, 0x01, 0x2a, 0x22,
 	0x0f, 0x2f, 0x72, 0x65, 0x67, 0x69, 0x73, 0x74, 0x65, 0x72, 0x2f, 0x7b, 0x6b, 0x65, 0x79, 0x7d,
-	0x42, 0x22, 0x5a, 0x20, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x67, 0x6f, 0x2f, 0x67, 0x65, 0x6e, 0x2f,
-	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x3b, 0x70,
-	0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x12, 0x74, 0x0a, 0x12, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72,
+	0x64, 0x53, 0x74, 0x61, 0x72, 0x74, 0x12, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52,
+	0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x53, 0x74, 0x61, 0x72,
+	0x74, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f,
+	0x2e, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x53, 0x74,
+	0x61, 0x72, 0x74, 0x52, 0x65, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x82, 0xd3, 0xe4, 0x93,
+	0x02, 0x14, 0x3a, 0x01, 0x2a, 0x22, 0x0f, 0x2f, 0x72, 0x65, 0x73, 0x65, 0x74, 0x2d, 0x70, 0x61,
+	0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x12, 0x7d, 0x0a, 0x14, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50,
+	0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x12, 0x22,
+	0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73,
+	0x77, 0x6f, 0x72, 0x64, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x52, 0x65, 0x71, 0x75, 0x65,
+	0x73, 0x74, 0x1a, 0x22, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x74,
+	0x50, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x50, 0x65, 0x6e, 0x64, 0x69, 0x6e, 0x67, 0x52,
+	0x65, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1d, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x17, 0x12, 0x15,
+	0x2f, 0x72, 0x65, 0x73, 0x65, 0x74, 0x2d, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x2f,
+	0x7b, 0x6b, 0x65, 0x79, 0x7d, 0x12, 0x7d, 0x0a, 0x13, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61,
+	0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x12, 0x21, 0x2e, 0x70,
+	0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73, 0x73, 0x77, 0x6f,
+	0x72, 0x64, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a,
+	0x21, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2e, 0x52, 0x65, 0x73, 0x65, 0x74, 0x50, 0x61, 0x73,
+	0x73, 0x77, 0x6f, 0x72, 0x64, 0x46, 0x69, 0x6e, 0x69, 0x73, 0x68, 0x52, 0x65, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x22, 0x20, 0x82, 0xd3, 0xe4, 0x93, 0x02, 0x1a, 0x3a, 0x01, 0x2a, 0x22, 0x15, 0x2f,
+	0x72, 0x65, 0x73, 0x65, 0x74, 0x2d, 0x70, 0x61, 0x73, 0x73, 0x77, 0x6f, 0x72, 0x64, 0x2f, 0x7b,
+	0x6b, 0x65, 0x79, 0x7d, 0x42, 0x22, 0x5a, 0x20, 0x67, 0x72, 0x70, 0x63, 0x2d, 0x67, 0x6f, 0x2f,
+	0x67, 0x65, 0x6e, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x2f, 0x67, 0x6f, 0x2f, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x3b, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -901,24 +1221,30 @@ func file_proto_server_service_proto_rawDescGZIP() []byte {
 	return file_proto_server_service_proto_rawDescData
 }
 
-var file_proto_server_service_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
+var file_proto_server_service_proto_msgTypes = make([]protoimpl.MessageInfo, 22)
 var file_proto_server_service_proto_goTypes = []interface{}{
-	(*IsAuthRequest)(nil),          // 0: proto.IsAuthRequest
-	(*IsAuthReponse)(nil),          // 1: proto.IsAuthReponse
-	(*CurrentUserRequest)(nil),     // 2: proto.CurrentUserRequest
-	(*CurrentUserReponse)(nil),     // 3: proto.CurrentUserReponse
-	(*LoginRequest)(nil),           // 4: proto.LoginRequest
-	(*LoginReponse)(nil),           // 5: proto.LoginReponse
-	(*LogoutRequest)(nil),          // 6: proto.LogoutRequest
-	(*LogoutReponse)(nil),          // 7: proto.LogoutReponse
-	(*RefreshRequest)(nil),         // 8: proto.RefreshRequest
-	(*RefreshReponse)(nil),         // 9: proto.RefreshReponse
-	(*RegisterStartRequest)(nil),   // 10: proto.RegisterStartRequest
-	(*RegisterStartReponse)(nil),   // 11: proto.RegisterStartReponse
-	(*RegisterPendingRequest)(nil), // 12: proto.RegisterPendingRequest
-	(*RegisterPendingReponse)(nil), // 13: proto.RegisterPendingReponse
-	(*RegisterFinishRequest)(nil),  // 14: proto.RegisterFinishRequest
-	(*RegisterFinishReponse)(nil),  // 15: proto.RegisterFinishReponse
+	(*IsAuthRequest)(nil),               // 0: proto.IsAuthRequest
+	(*IsAuthReponse)(nil),               // 1: proto.IsAuthReponse
+	(*CurrentUserRequest)(nil),          // 2: proto.CurrentUserRequest
+	(*CurrentUserReponse)(nil),          // 3: proto.CurrentUserReponse
+	(*LoginRequest)(nil),                // 4: proto.LoginRequest
+	(*LoginReponse)(nil),                // 5: proto.LoginReponse
+	(*LogoutRequest)(nil),               // 6: proto.LogoutRequest
+	(*LogoutReponse)(nil),               // 7: proto.LogoutReponse
+	(*RefreshRequest)(nil),              // 8: proto.RefreshRequest
+	(*RefreshReponse)(nil),              // 9: proto.RefreshReponse
+	(*RegisterStartRequest)(nil),        // 10: proto.RegisterStartRequest
+	(*RegisterStartReponse)(nil),        // 11: proto.RegisterStartReponse
+	(*RegisterPendingRequest)(nil),      // 12: proto.RegisterPendingRequest
+	(*RegisterPendingReponse)(nil),      // 13: proto.RegisterPendingReponse
+	(*RegisterFinishRequest)(nil),       // 14: proto.RegisterFinishRequest
+	(*RegisterFinishReponse)(nil),       // 15: proto.RegisterFinishReponse
+	(*ResetPasswordStartRequest)(nil),   // 16: proto.ResetPasswordStartRequest
+	(*ResetPasswordStartReponse)(nil),   // 17: proto.ResetPasswordStartReponse
+	(*ResetPasswordPendingRequest)(nil), // 18: proto.ResetPasswordPendingRequest
+	(*ResetPasswordPendingReponse)(nil), // 19: proto.ResetPasswordPendingReponse
+	(*ResetPasswordFinishRequest)(nil),  // 20: proto.ResetPasswordFinishRequest
+	(*ResetPasswordFinishReponse)(nil),  // 21: proto.ResetPasswordFinishReponse
 }
 var file_proto_server_service_proto_depIdxs = []int32{
 	0,  // 0: proto.IdentityService.IsAuth:input_type -> proto.IsAuthRequest
@@ -929,16 +1255,22 @@ var file_proto_server_service_proto_depIdxs = []int32{
 	10, // 5: proto.IdentityService.RegisterStart:input_type -> proto.RegisterStartRequest
 	12, // 6: proto.IdentityService.RegisterPending:input_type -> proto.RegisterPendingRequest
 	14, // 7: proto.IdentityService.RegisterFinish:input_type -> proto.RegisterFinishRequest
-	1,  // 8: proto.IdentityService.IsAuth:output_type -> proto.IsAuthReponse
-	3,  // 9: proto.IdentityService.CurrentUser:output_type -> proto.CurrentUserReponse
-	5,  // 10: proto.IdentityService.Login:output_type -> proto.LoginReponse
-	7,  // 11: proto.IdentityService.Logout:output_type -> proto.LogoutReponse
-	9,  // 12: proto.IdentityService.Refresh:output_type -> proto.RefreshReponse
-	11, // 13: proto.IdentityService.RegisterStart:output_type -> proto.RegisterStartReponse
-	13, // 14: proto.IdentityService.RegisterPending:output_type -> proto.RegisterPendingReponse
-	15, // 15: proto.IdentityService.RegisterFinish:output_type -> proto.RegisterFinishReponse
-	8,  // [8:16] is the sub-list for method output_type
-	0,  // [0:8] is the sub-list for method input_type
+	16, // 8: proto.IdentityService.ResetPasswordStart:input_type -> proto.ResetPasswordStartRequest
+	18, // 9: proto.IdentityService.ResetPasswordPending:input_type -> proto.ResetPasswordPendingRequest
+	20, // 10: proto.IdentityService.ResetPasswordFinish:input_type -> proto.ResetPasswordFinishRequest
+	1,  // 11: proto.IdentityService.IsAuth:output_type -> proto.IsAuthReponse
+	3,  // 12: proto.IdentityService.CurrentUser:output_type -> proto.CurrentUserReponse
+	5,  // 13: proto.IdentityService.Login:output_type -> proto.LoginReponse
+	7,  // 14: proto.IdentityService.Logout:output_type -> proto.LogoutReponse
+	9,  // 15: proto.IdentityService.Refresh:output_type -> proto.RefreshReponse
+	11, // 16: proto.IdentityService.RegisterStart:output_type -> proto.RegisterStartReponse
+	13, // 17: proto.IdentityService.RegisterPending:output_type -> proto.RegisterPendingReponse
+	15, // 18: proto.IdentityService.RegisterFinish:output_type -> proto.RegisterFinishReponse
+	17, // 19: proto.IdentityService.ResetPasswordStart:output_type -> proto.ResetPasswordStartReponse
+	19, // 20: proto.IdentityService.ResetPasswordPending:output_type -> proto.ResetPasswordPendingReponse
+	21, // 21: proto.IdentityService.ResetPasswordFinish:output_type -> proto.ResetPasswordFinishReponse
+	11, // [11:22] is the sub-list for method output_type
+	0,  // [0:11] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
@@ -1142,6 +1474,78 @@ func file_proto_server_service_proto_init() {
 				return nil
 			}
 		}
+		file_proto_server_service_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordStartRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_server_service_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordStartReponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_server_service_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordPendingRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_server_service_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordPendingReponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_server_service_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordFinishRequest); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_proto_server_service_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*ResetPasswordFinishReponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
@@ -1149,7 +1553,7 @@ func file_proto_server_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_proto_server_service_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   16,
+			NumMessages:   22,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

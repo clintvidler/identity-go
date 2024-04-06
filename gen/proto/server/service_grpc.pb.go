@@ -19,14 +19,17 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	IdentityService_IsAuth_FullMethodName          = "/proto.IdentityService/IsAuth"
-	IdentityService_CurrentUser_FullMethodName     = "/proto.IdentityService/CurrentUser"
-	IdentityService_Login_FullMethodName           = "/proto.IdentityService/Login"
-	IdentityService_Logout_FullMethodName          = "/proto.IdentityService/Logout"
-	IdentityService_Refresh_FullMethodName         = "/proto.IdentityService/Refresh"
-	IdentityService_RegisterStart_FullMethodName   = "/proto.IdentityService/RegisterStart"
-	IdentityService_RegisterPending_FullMethodName = "/proto.IdentityService/RegisterPending"
-	IdentityService_RegisterFinish_FullMethodName  = "/proto.IdentityService/RegisterFinish"
+	IdentityService_IsAuth_FullMethodName               = "/proto.IdentityService/IsAuth"
+	IdentityService_CurrentUser_FullMethodName          = "/proto.IdentityService/CurrentUser"
+	IdentityService_Login_FullMethodName                = "/proto.IdentityService/Login"
+	IdentityService_Logout_FullMethodName               = "/proto.IdentityService/Logout"
+	IdentityService_Refresh_FullMethodName              = "/proto.IdentityService/Refresh"
+	IdentityService_RegisterStart_FullMethodName        = "/proto.IdentityService/RegisterStart"
+	IdentityService_RegisterPending_FullMethodName      = "/proto.IdentityService/RegisterPending"
+	IdentityService_RegisterFinish_FullMethodName       = "/proto.IdentityService/RegisterFinish"
+	IdentityService_ResetPasswordStart_FullMethodName   = "/proto.IdentityService/ResetPasswordStart"
+	IdentityService_ResetPasswordPending_FullMethodName = "/proto.IdentityService/ResetPasswordPending"
+	IdentityService_ResetPasswordFinish_FullMethodName  = "/proto.IdentityService/ResetPasswordFinish"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -41,6 +44,9 @@ type IdentityServiceClient interface {
 	RegisterStart(ctx context.Context, in *RegisterStartRequest, opts ...grpc.CallOption) (*RegisterStartReponse, error)
 	RegisterPending(ctx context.Context, in *RegisterPendingRequest, opts ...grpc.CallOption) (*RegisterPendingReponse, error)
 	RegisterFinish(ctx context.Context, in *RegisterFinishRequest, opts ...grpc.CallOption) (*RegisterFinishReponse, error)
+	ResetPasswordStart(ctx context.Context, in *ResetPasswordStartRequest, opts ...grpc.CallOption) (*ResetPasswordStartReponse, error)
+	ResetPasswordPending(ctx context.Context, in *ResetPasswordPendingRequest, opts ...grpc.CallOption) (*ResetPasswordPendingReponse, error)
+	ResetPasswordFinish(ctx context.Context, in *ResetPasswordFinishRequest, opts ...grpc.CallOption) (*ResetPasswordFinishReponse, error)
 }
 
 type identityServiceClient struct {
@@ -123,6 +129,33 @@ func (c *identityServiceClient) RegisterFinish(ctx context.Context, in *Register
 	return out, nil
 }
 
+func (c *identityServiceClient) ResetPasswordStart(ctx context.Context, in *ResetPasswordStartRequest, opts ...grpc.CallOption) (*ResetPasswordStartReponse, error) {
+	out := new(ResetPasswordStartReponse)
+	err := c.cc.Invoke(ctx, IdentityService_ResetPasswordStart_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) ResetPasswordPending(ctx context.Context, in *ResetPasswordPendingRequest, opts ...grpc.CallOption) (*ResetPasswordPendingReponse, error) {
+	out := new(ResetPasswordPendingReponse)
+	err := c.cc.Invoke(ctx, IdentityService_ResetPasswordPending_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) ResetPasswordFinish(ctx context.Context, in *ResetPasswordFinishRequest, opts ...grpc.CallOption) (*ResetPasswordFinishReponse, error) {
+	out := new(ResetPasswordFinishReponse)
+	err := c.cc.Invoke(ctx, IdentityService_ResetPasswordFinish_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility
@@ -135,6 +168,9 @@ type IdentityServiceServer interface {
 	RegisterStart(context.Context, *RegisterStartRequest) (*RegisterStartReponse, error)
 	RegisterPending(context.Context, *RegisterPendingRequest) (*RegisterPendingReponse, error)
 	RegisterFinish(context.Context, *RegisterFinishRequest) (*RegisterFinishReponse, error)
+	ResetPasswordStart(context.Context, *ResetPasswordStartRequest) (*ResetPasswordStartReponse, error)
+	ResetPasswordPending(context.Context, *ResetPasswordPendingRequest) (*ResetPasswordPendingReponse, error)
+	ResetPasswordFinish(context.Context, *ResetPasswordFinishRequest) (*ResetPasswordFinishReponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -165,6 +201,15 @@ func (UnimplementedIdentityServiceServer) RegisterPending(context.Context, *Regi
 }
 func (UnimplementedIdentityServiceServer) RegisterFinish(context.Context, *RegisterFinishRequest) (*RegisterFinishReponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegisterFinish not implemented")
+}
+func (UnimplementedIdentityServiceServer) ResetPasswordStart(context.Context, *ResetPasswordStartRequest) (*ResetPasswordStartReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPasswordStart not implemented")
+}
+func (UnimplementedIdentityServiceServer) ResetPasswordPending(context.Context, *ResetPasswordPendingRequest) (*ResetPasswordPendingReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPasswordPending not implemented")
+}
+func (UnimplementedIdentityServiceServer) ResetPasswordFinish(context.Context, *ResetPasswordFinishRequest) (*ResetPasswordFinishReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method ResetPasswordFinish not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 
@@ -323,6 +368,60 @@ func _IdentityService_RegisterFinish_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_ResetPasswordStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordStartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).ResetPasswordStart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_ResetPasswordStart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).ResetPasswordStart(ctx, req.(*ResetPasswordStartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_ResetPasswordPending_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordPendingRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).ResetPasswordPending(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_ResetPasswordPending_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).ResetPasswordPending(ctx, req.(*ResetPasswordPendingRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_ResetPasswordFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResetPasswordFinishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).ResetPasswordFinish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_ResetPasswordFinish_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).ResetPasswordFinish(ctx, req.(*ResetPasswordFinishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -361,6 +460,18 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "RegisterFinish",
 			Handler:    _IdentityService_RegisterFinish_Handler,
+		},
+		{
+			MethodName: "ResetPasswordStart",
+			Handler:    _IdentityService_ResetPasswordStart_Handler,
+		},
+		{
+			MethodName: "ResetPasswordPending",
+			Handler:    _IdentityService_ResetPasswordPending_Handler,
+		},
+		{
+			MethodName: "ResetPasswordFinish",
+			Handler:    _IdentityService_ResetPasswordFinish_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

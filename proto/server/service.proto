@@ -54,13 +54,32 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc ResetPasswordStart(ResetPasswordStartRequest) returns (ResetPasswordStartReponse) {
+    option (google.api.http) = {
+      post: "/reset-password"
+      body: "*"
+    };
+  }
+  rpc ResetPasswordPending(ResetPasswordPendingRequest) returns (ResetPasswordPendingReponse) {
+    option (google.api.http) = {
+      get: "/reset-password/{key}"
+    };
+  }
+  rpc ResetPasswordFinish(ResetPasswordFinishRequest) returns (ResetPasswordFinishReponse) {
+    option (google.api.http) = {
+      post: "/reset-password/{key}"
+      body: "*"
+    };
+  }
 }
 
+// Is authenticated
 message IsAuthRequest {}
 message IsAuthReponse {
 	string id = 1;
 }
 
+// Current user
 message CurrentUserRequest {}
 message CurrentUserReponse {
 	string id = 1;
@@ -71,27 +90,30 @@ message CurrentUserReponse {
   string expired_at = 6;
 }
 
+// Login
 message LoginRequest {
 	string email = 1;
 	string password = 2;
 }
 message LoginReponse {}
 
+// Logout
 message LogoutRequest {
   string refresh_token = 1;
 }
 message LogoutReponse {}
 
+// Refresh
 message RefreshRequest {
   string refresh_token = 1;
 }
 message RefreshReponse {}
 
+// Register
 message RegisterStartRequest {
   string email = 1;
 }
-message RegisterStartReponse {
-}
+message RegisterStartReponse {}
 message RegisterPendingRequest {
   string key = 1;
 }
@@ -106,3 +128,20 @@ message RegisterFinishRequest {
 message RegisterFinishReponse {
   string id = 1;
 }
+
+// Reset password
+message ResetPasswordStartRequest {
+  string email = 1;
+}
+message ResetPasswordStartReponse {}
+message ResetPasswordPendingRequest {
+  string key = 1;
+}
+message ResetPasswordPendingReponse {
+  string email = 1;
+}
+message ResetPasswordFinishRequest {
+  string key = 1;
+	string password = 2;
+}
+message ResetPasswordFinishReponse {}

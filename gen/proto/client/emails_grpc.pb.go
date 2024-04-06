@@ -19,13 +19,15 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	Email_Send_FullMethodName = "/emails.Email/Send"
+	Email_Echo_FullMethodName = "/grpc.Email/Echo"
+	Email_Send_FullMethodName = "/grpc.Email/Send"
 )
 
 // EmailClient is the client API for Email service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmailClient interface {
+	Echo(ctx context.Context, in *ResponseRequest, opts ...grpc.CallOption) (*ResponseRequest, error)
 	Send(ctx context.Context, in *EmailSendRequest, opts ...grpc.CallOption) (*EmailSendResponse, error)
 }
 
@@ -35,6 +37,15 @@ type emailClient struct {
 
 func NewEmailClient(cc grpc.ClientConnInterface) EmailClient {
 	return &emailClient{cc}
+}
+
+func (c *emailClient) Echo(ctx context.Context, in *ResponseRequest, opts ...grpc.CallOption) (*ResponseRequest, error) {
+	out := new(ResponseRequest)
+	err := c.cc.Invoke(ctx, Email_Echo_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *emailClient) Send(ctx context.Context, in *EmailSendRequest, opts ...grpc.CallOption) (*EmailSendResponse, error) {
@@ -50,6 +61,7 @@ func (c *emailClient) Send(ctx context.Context, in *EmailSendRequest, opts ...gr
 // All implementations must embed UnimplementedEmailServer
 // for forward compatibility
 type EmailServer interface {
+	Echo(context.Context, *ResponseRequest) (*ResponseRequest, error)
 	Send(context.Context, *EmailSendRequest) (*EmailSendResponse, error)
 	mustEmbedUnimplementedEmailServer()
 }
@@ -58,6 +70,9 @@ type EmailServer interface {
 type UnimplementedEmailServer struct {
 }
 
+func (UnimplementedEmailServer) Echo(context.Context, *ResponseRequest) (*ResponseRequest, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Echo not implemented")
+}
 func (UnimplementedEmailServer) Send(context.Context, *EmailSendRequest) (*EmailSendResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Send not implemented")
 }
@@ -72,6 +87,24 @@ type UnsafeEmailServer interface {
 
 func RegisterEmailServer(s grpc.ServiceRegistrar, srv EmailServer) {
 	s.RegisterService(&Email_ServiceDesc, srv)
+}
+
+func _Email_Echo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ResponseRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmailServer).Echo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: Email_Echo_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmailServer).Echo(ctx, req.(*ResponseRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _Email_Send_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -96,9 +129,13 @@ func _Email_Send_Handler(srv interface{}, ctx context.Context, dec func(interfac
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var Email_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "emails.Email",
+	ServiceName: "grpc.Email",
 	HandlerType: (*EmailServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "Echo",
+			Handler:    _Email_Echo_Handler,
+		},
 		{
 			MethodName: "Send",
 			Handler:    _Email_Send_Handler,
