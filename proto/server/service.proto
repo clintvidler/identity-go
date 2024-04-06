@@ -71,6 +71,17 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc UpdateEmailStart(UpdateEmailStartRequest) returns (UpdateEmailStartReponse) {
+    option (google.api.http) = {
+      post: "/update-email"
+      body: "*"
+    };
+  }
+  rpc UpdateEmailFinish(UpdateEmailFinishRequest) returns (UpdateEmailFinishReponse) {
+    option (google.api.http) = {
+      get: "/update-email/{key}"
+    };
+  }
 }
 
 // Is authenticated
@@ -145,3 +156,13 @@ message ResetPasswordFinishRequest {
 	string password = 2;
 }
 message ResetPasswordFinishReponse {}
+
+// Update email
+message UpdateEmailStartRequest {
+  string email = 1;
+}
+message UpdateEmailStartReponse {}
+message UpdateEmailFinishRequest {
+  string key = 1;
+}
+message UpdateEmailFinishReponse {}

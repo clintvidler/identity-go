@@ -30,6 +30,8 @@ const (
 	IdentityService_ResetPasswordStart_FullMethodName   = "/proto.IdentityService/ResetPasswordStart"
 	IdentityService_ResetPasswordPending_FullMethodName = "/proto.IdentityService/ResetPasswordPending"
 	IdentityService_ResetPasswordFinish_FullMethodName  = "/proto.IdentityService/ResetPasswordFinish"
+	IdentityService_UpdateEmailStart_FullMethodName     = "/proto.IdentityService/UpdateEmailStart"
+	IdentityService_UpdateEmailFinish_FullMethodName    = "/proto.IdentityService/UpdateEmailFinish"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -47,6 +49,8 @@ type IdentityServiceClient interface {
 	ResetPasswordStart(ctx context.Context, in *ResetPasswordStartRequest, opts ...grpc.CallOption) (*ResetPasswordStartReponse, error)
 	ResetPasswordPending(ctx context.Context, in *ResetPasswordPendingRequest, opts ...grpc.CallOption) (*ResetPasswordPendingReponse, error)
 	ResetPasswordFinish(ctx context.Context, in *ResetPasswordFinishRequest, opts ...grpc.CallOption) (*ResetPasswordFinishReponse, error)
+	UpdateEmailStart(ctx context.Context, in *UpdateEmailStartRequest, opts ...grpc.CallOption) (*UpdateEmailStartReponse, error)
+	UpdateEmailFinish(ctx context.Context, in *UpdateEmailFinishRequest, opts ...grpc.CallOption) (*UpdateEmailFinishReponse, error)
 }
 
 type identityServiceClient struct {
@@ -156,6 +160,24 @@ func (c *identityServiceClient) ResetPasswordFinish(ctx context.Context, in *Res
 	return out, nil
 }
 
+func (c *identityServiceClient) UpdateEmailStart(ctx context.Context, in *UpdateEmailStartRequest, opts ...grpc.CallOption) (*UpdateEmailStartReponse, error) {
+	out := new(UpdateEmailStartReponse)
+	err := c.cc.Invoke(ctx, IdentityService_UpdateEmailStart_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) UpdateEmailFinish(ctx context.Context, in *UpdateEmailFinishRequest, opts ...grpc.CallOption) (*UpdateEmailFinishReponse, error) {
+	out := new(UpdateEmailFinishReponse)
+	err := c.cc.Invoke(ctx, IdentityService_UpdateEmailFinish_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility
@@ -171,6 +193,8 @@ type IdentityServiceServer interface {
 	ResetPasswordStart(context.Context, *ResetPasswordStartRequest) (*ResetPasswordStartReponse, error)
 	ResetPasswordPending(context.Context, *ResetPasswordPendingRequest) (*ResetPasswordPendingReponse, error)
 	ResetPasswordFinish(context.Context, *ResetPasswordFinishRequest) (*ResetPasswordFinishReponse, error)
+	UpdateEmailStart(context.Context, *UpdateEmailStartRequest) (*UpdateEmailStartReponse, error)
+	UpdateEmailFinish(context.Context, *UpdateEmailFinishRequest) (*UpdateEmailFinishReponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -210,6 +234,12 @@ func (UnimplementedIdentityServiceServer) ResetPasswordPending(context.Context, 
 }
 func (UnimplementedIdentityServiceServer) ResetPasswordFinish(context.Context, *ResetPasswordFinishRequest) (*ResetPasswordFinishReponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ResetPasswordFinish not implemented")
+}
+func (UnimplementedIdentityServiceServer) UpdateEmailStart(context.Context, *UpdateEmailStartRequest) (*UpdateEmailStartReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmailStart not implemented")
+}
+func (UnimplementedIdentityServiceServer) UpdateEmailFinish(context.Context, *UpdateEmailFinishRequest) (*UpdateEmailFinishReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmailFinish not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 
@@ -422,6 +452,42 @@ func _IdentityService_ResetPasswordFinish_Handler(srv interface{}, ctx context.C
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_UpdateEmailStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEmailStartRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).UpdateEmailStart(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_UpdateEmailStart_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).UpdateEmailStart(ctx, req.(*UpdateEmailStartRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_UpdateEmailFinish_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateEmailFinishRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).UpdateEmailFinish(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_UpdateEmailFinish_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).UpdateEmailFinish(ctx, req.(*UpdateEmailFinishRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -472,6 +538,14 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ResetPasswordFinish",
 			Handler:    _IdentityService_ResetPasswordFinish_Handler,
+		},
+		{
+			MethodName: "UpdateEmailStart",
+			Handler:    _IdentityService_UpdateEmailStart_Handler,
+		},
+		{
+			MethodName: "UpdateEmailFinish",
+			Handler:    _IdentityService_UpdateEmailFinish_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

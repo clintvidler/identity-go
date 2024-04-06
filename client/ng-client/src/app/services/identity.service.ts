@@ -246,9 +246,8 @@ export class IdentityService {
   finishUpdateEmail(key: string): Observable<any> {
     console.warn('finishUpdateEmail', key);
 
-    return this.http.post(
+    return this.http.get(
       `${environment.server}/update-email/${key}`,
-      {},
       this.httpOptions
     );
   }
