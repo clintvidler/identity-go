@@ -9,7 +9,6 @@ import (
 )
 
 func (s IdentityService) UpdateEmailStart(ctx context.Context, req *proto.UpdateEmailStartRequest) (*proto.UpdateEmailStartReponse, error) {
-
 	uid := ctx.Value(KeyUid{}).(string)
 
 	emailNew := req.Email

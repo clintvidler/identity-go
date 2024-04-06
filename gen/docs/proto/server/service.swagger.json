@@ -390,6 +390,38 @@
         ]
       }
     },
+    "/update-password": {
+      "post": {
+        "operationId": "IdentityService_UpdatePassword",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoUpdatePasswordReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoUpdatePasswordRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/user": {
       "get": {
         "operationId": "IdentityService_CurrentUser",
@@ -559,6 +591,21 @@
         }
       },
       "title": "Update email"
+    },
+    "protoUpdatePasswordReponse": {
+      "type": "object"
+    },
+    "protoUpdatePasswordRequest": {
+      "type": "object",
+      "properties": {
+        "old": {
+          "type": "string"
+        },
+        "new": {
+          "type": "string"
+        }
+      },
+      "title": "Update password"
     },
     "protobufAny": {
       "type": "object",

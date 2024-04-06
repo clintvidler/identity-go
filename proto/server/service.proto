@@ -71,6 +71,12 @@ service IdentityService {
       body: "*"
     };
   }
+  rpc UpdatePassword(UpdatePasswordRequest) returns (UpdatePasswordReponse) {
+    option (google.api.http) = {
+      post: "/update-password"
+      body: "*"
+    };
+  }
   rpc UpdateEmailStart(UpdateEmailStartRequest) returns (UpdateEmailStartReponse) {
     option (google.api.http) = {
       post: "/update-email"
@@ -156,6 +162,13 @@ message ResetPasswordFinishRequest {
 	string password = 2;
 }
 message ResetPasswordFinishReponse {}
+
+// Update password
+message UpdatePasswordRequest {
+  string old = 1;
+  string new = 2;
+}
+message UpdatePasswordReponse {}
 
 // Update email
 message UpdateEmailStartRequest {
