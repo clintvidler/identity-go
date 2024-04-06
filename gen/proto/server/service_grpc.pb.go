@@ -31,6 +31,7 @@ const (
 	IdentityService_ResetPasswordPending_FullMethodName = "/proto.IdentityService/ResetPasswordPending"
 	IdentityService_ResetPasswordFinish_FullMethodName  = "/proto.IdentityService/ResetPasswordFinish"
 	IdentityService_UpdatePassword_FullMethodName       = "/proto.IdentityService/UpdatePassword"
+	IdentityService_UpdateDisplayName_FullMethodName    = "/proto.IdentityService/UpdateDisplayName"
 	IdentityService_UpdateEmailStart_FullMethodName     = "/proto.IdentityService/UpdateEmailStart"
 	IdentityService_UpdateEmailFinish_FullMethodName    = "/proto.IdentityService/UpdateEmailFinish"
 )
@@ -51,6 +52,7 @@ type IdentityServiceClient interface {
 	ResetPasswordPending(ctx context.Context, in *ResetPasswordPendingRequest, opts ...grpc.CallOption) (*ResetPasswordPendingReponse, error)
 	ResetPasswordFinish(ctx context.Context, in *ResetPasswordFinishRequest, opts ...grpc.CallOption) (*ResetPasswordFinishReponse, error)
 	UpdatePassword(ctx context.Context, in *UpdatePasswordRequest, opts ...grpc.CallOption) (*UpdatePasswordReponse, error)
+	UpdateDisplayName(ctx context.Context, in *UpdateDisplayNameRequest, opts ...grpc.CallOption) (*UpdateDisplayNameReponse, error)
 	UpdateEmailStart(ctx context.Context, in *UpdateEmailStartRequest, opts ...grpc.CallOption) (*UpdateEmailStartReponse, error)
 	UpdateEmailFinish(ctx context.Context, in *UpdateEmailFinishRequest, opts ...grpc.CallOption) (*UpdateEmailFinishReponse, error)
 }
@@ -171,6 +173,15 @@ func (c *identityServiceClient) UpdatePassword(ctx context.Context, in *UpdatePa
 	return out, nil
 }
 
+func (c *identityServiceClient) UpdateDisplayName(ctx context.Context, in *UpdateDisplayNameRequest, opts ...grpc.CallOption) (*UpdateDisplayNameReponse, error) {
+	out := new(UpdateDisplayNameReponse)
+	err := c.cc.Invoke(ctx, IdentityService_UpdateDisplayName_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *identityServiceClient) UpdateEmailStart(ctx context.Context, in *UpdateEmailStartRequest, opts ...grpc.CallOption) (*UpdateEmailStartReponse, error) {
 	out := new(UpdateEmailStartReponse)
 	err := c.cc.Invoke(ctx, IdentityService_UpdateEmailStart_FullMethodName, in, out, opts...)
@@ -205,6 +216,7 @@ type IdentityServiceServer interface {
 	ResetPasswordPending(context.Context, *ResetPasswordPendingRequest) (*ResetPasswordPendingReponse, error)
 	ResetPasswordFinish(context.Context, *ResetPasswordFinishRequest) (*ResetPasswordFinishReponse, error)
 	UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordReponse, error)
+	UpdateDisplayName(context.Context, *UpdateDisplayNameRequest) (*UpdateDisplayNameReponse, error)
 	UpdateEmailStart(context.Context, *UpdateEmailStartRequest) (*UpdateEmailStartReponse, error)
 	UpdateEmailFinish(context.Context, *UpdateEmailFinishRequest) (*UpdateEmailFinishReponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
@@ -249,6 +261,9 @@ func (UnimplementedIdentityServiceServer) ResetPasswordFinish(context.Context, *
 }
 func (UnimplementedIdentityServiceServer) UpdatePassword(context.Context, *UpdatePasswordRequest) (*UpdatePasswordReponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdatePassword not implemented")
+}
+func (UnimplementedIdentityServiceServer) UpdateDisplayName(context.Context, *UpdateDisplayNameRequest) (*UpdateDisplayNameReponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method UpdateDisplayName not implemented")
 }
 func (UnimplementedIdentityServiceServer) UpdateEmailStart(context.Context, *UpdateEmailStartRequest) (*UpdateEmailStartReponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UpdateEmailStart not implemented")
@@ -485,6 +500,24 @@ func _IdentityService_UpdatePassword_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_UpdateDisplayName_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(UpdateDisplayNameRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).UpdateDisplayName(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_UpdateDisplayName_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).UpdateDisplayName(ctx, req.(*UpdateDisplayNameRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _IdentityService_UpdateEmailStart_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateEmailStartRequest)
 	if err := dec(in); err != nil {
@@ -575,6 +608,10 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UpdatePassword",
 			Handler:    _IdentityService_UpdatePassword_Handler,
+		},
+		{
+			MethodName: "UpdateDisplayName",
+			Handler:    _IdentityService_UpdateDisplayName_Handler,
 		},
 		{
 			MethodName: "UpdateEmailStart",
