@@ -50,6 +50,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 	protected := []string{
 		"/proto.IdentityService/IsAuth",
 		"/proto.IdentityService/CurrentUser",
+		"/proto.IdentityService/UpdatePassword",
 		"/proto.IdentityService/UpdateEmailStart",
 	}
 

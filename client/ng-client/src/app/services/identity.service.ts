@@ -210,8 +210,6 @@ export class IdentityService {
   // Update password
 
   updatePassword(data: any): Observable<any> {
-    console.warn('updatePassword', data);
-
     return this.http.post<Response>(
       `${environment.server}/update-password`,
       data,
