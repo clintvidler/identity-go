@@ -328,6 +328,68 @@
         ]
       }
     },
+    "/update-email": {
+      "post": {
+        "operationId": "IdentityService_UpdateEmailStart",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoUpdateEmailStartReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/protoUpdateEmailStartRequest"
+            }
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
+    "/update-email/{key}": {
+      "get": {
+        "operationId": "IdentityService_UpdateEmailFinish",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/protoUpdateEmailFinishReponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "key",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "IdentityService"
+        ]
+      }
+    },
     "/user": {
       "get": {
         "operationId": "IdentityService_CurrentUser",
@@ -482,6 +544,21 @@
         }
       },
       "title": "Reset password"
+    },
+    "protoUpdateEmailFinishReponse": {
+      "type": "object"
+    },
+    "protoUpdateEmailStartReponse": {
+      "type": "object"
+    },
+    "protoUpdateEmailStartRequest": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        }
+      },
+      "title": "Update email"
     },
     "protobufAny": {
       "type": "object",

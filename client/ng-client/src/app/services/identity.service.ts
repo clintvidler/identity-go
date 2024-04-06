@@ -234,8 +234,6 @@ export class IdentityService {
   // Update email
 
   startUpdateEmail(data: any): Observable<any> {
-    console.warn('startUpdateEmail', data);
-
     return this.http.post(
       `${environment.server}/update-email`,
       data,
@@ -244,11 +242,8 @@ export class IdentityService {
   }
 
   finishUpdateEmail(key: string): Observable<any> {
-    console.warn('finishUpdateEmail', key);
-
-    return this.http.post(
+    return this.http.get(
       `${environment.server}/update-email/${key}`,
-      {},
       this.httpOptions
     );
   }
