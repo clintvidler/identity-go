@@ -185,16 +185,12 @@ export class IdentityService {
   // Reset password
 
   startResetPassword(data: any): Observable<any> {
-    console.warn('startResetPassword', data);
-
     return this.http
       .post(`${environment.server}/reset-password`, data, this.httpOptions)
       .pipe(tap((result) => console.log(result)));
   }
 
   pendingResetPassword(key: string): Observable<any> {
-    console.warn(key);
-
     return this.http.get(
       `${environment.server}/reset-password/${key}`,
       this.httpOptions
@@ -202,8 +198,6 @@ export class IdentityService {
   }
 
   finishResetPassword(data: any, key: string): Observable<any> {
-    console.warn('finishResetPassword', data, key);
-
     return this.http
       .post(
         `${environment.server}/reset-password/${key}`,

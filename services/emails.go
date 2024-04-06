@@ -20,10 +20,10 @@ func NewEmailClient(host, port string) *EmailClient {
 	return &EmailClient{host: host, port: port}
 }
 
-func (c *EmailClient) SendEmail(to, from, subject, body string) {
+func (c *EmailClient) Send(to, from, subject, body string) {
 	conn, err := grpc.Dial(c.host+":"+c.port, grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	client := proto.NewEmailClient(conn)
@@ -36,7 +36,7 @@ func (c *EmailClient) SendEmail(to, from, subject, body string) {
 			Body:    body,
 		})
 	if err != nil {
-		log.Fatalln(err)
+		log.Println(err)
 	}
 
 	fmt.Println(sendResponse)

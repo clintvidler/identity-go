@@ -34,7 +34,7 @@ func (s IdentityService) RegisterStart(ctx context.Context, req *proto.RegisterS
 	emailFrom := "no-reply@" + strings.Split(os.Getenv("FRONTEND_URL"), ":")[0]
 	emailSubject := "Confirm your account"
 	emailBody := "http://" + os.Getenv("FRONTEND_URL") + "/register/" + key + "\n\nExpires in 24 hours."
-	s.emailClient.SendEmail(emailTo, emailFrom, emailSubject, emailBody)
+	s.emailClient.Send(emailTo, emailFrom, emailSubject, emailBody)
 
 	return &proto.RegisterStartReponse{}, nil
 }
@@ -74,7 +74,7 @@ func (s IdentityService) RegisterFinish(ctx context.Context, req *proto.Register
 	emailSubject := "Welcome, account confirmed"
 	emailBody := "http://" + os.Getenv("FRONTEND_URL") + "/login"
 
-	s.emailClient.SendEmail(emailTo, emailFrom, emailSubject, emailBody)
+	s.emailClient.Send(emailTo, emailFrom, emailSubject, emailBody)
 
 	return &proto.RegisterFinishReponse{Id: fmt.Sprint(id)}, nil
 }
