@@ -93,7 +93,7 @@ func IsAuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 	if err != nil {
 		// TODO: respond with 401: unauthorized and listen for this on frontend
 
-		return nil, fmt.Errorf("Access token: %s", err.Error())
+		return nil, fmt.Errorf("access token: %s", err.Error())
 	}
 
 	tokenSubject := claims["sub"].(string)

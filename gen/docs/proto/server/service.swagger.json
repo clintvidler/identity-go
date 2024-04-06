@@ -308,7 +308,8 @@
         "password": {
           "type": "string"
         }
-      }
+      },
+      "title": "Login"
     },
     "protoLogoutReponse": {
       "type": "object"
@@ -319,7 +320,8 @@
         "refreshToken": {
           "type": "string"
         }
-      }
+      },
+      "title": "Logout"
     },
     "protoRefreshReponse": {
       "type": "object"
@@ -349,7 +351,8 @@
         "email": {
           "type": "string"
         }
-      }
+      },
+      "title": "Register"
     },
     "protobufAny": {
       "type": "object",

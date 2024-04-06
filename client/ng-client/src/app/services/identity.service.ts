@@ -225,7 +225,7 @@ export class IdentityService {
     );
   }
 
-  // Update username
+  // Update display name
 
   updateDisplayName(data: any): Observable<any> {
     console.warn('updateDisplayName', data);
