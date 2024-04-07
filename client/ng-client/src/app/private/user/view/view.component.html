@@ -1,1 +1,10 @@
-<pre>{{ user | json }}</pre>
+<div>
+  <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
+    <h2 class="text-2xl text-left mb-6 font-bold">User info</h2>
+    <ul>
+      <li>Id: {{ user?.id }}</li>
+      <li>Display name: {{ user?.displayName }}</li>
+      <li>Email: {{ user?.email }}</li>
+    </ul>
+  </div>
+</div>

@@ -1,60 +1,83 @@
-<div>
-  <form [formGroup]="passwordForm" (ngSubmit)="onPasswordSubmit()">
-    <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
-      <h3 class="text-2xl text-center mb-6 font-bold">Change password</h3>
+<div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl mb-12">
+  <h2 class="text-2xl text-left mb-6 font-bold">Update info</h2>
 
-      <app-server-errors [serverErrors]="passwordErrors"></app-server-errors>
+  <form
+    [formGroup]="passwordForm"
+    (ngSubmit)="onPasswordSubmit()"
+    class="mx-1 my-6"
+  >
+    <h3 class="text-lg text-left mb-4 font-bold">Change password</h3>
 
-      <app-password-input
-        formControlName="old"
-        inputId="old-password-input"
-        label=" "
-        sufix=""
-        placeholder="Your old password"
-      ></app-password-input>
+    <app-server-errors [serverErrors]="passwordErrors"></app-server-errors>
 
-      <app-password-input
-        formControlName="new"
-        inputId="new-password-input"
-        label=" "
-        sufix=""
-        placeholder="Your new password"
-      ></app-password-input>
+    <app-password-input
+      formControlName="old"
+      inputId="old-password-input"
+      label=" "
+      sufix=""
+      placeholder="Your old password"
+    ></app-password-input>
 
-      <app-submit-input></app-submit-input>
-    </div>
+    <app-password-input
+      formControlName="new"
+      inputId="new-password-input"
+      label=" "
+      sufix=""
+      placeholder="Your new password"
+    ></app-password-input>
+
+    <app-submit-input></app-submit-input>
   </form>
 
-  <form [formGroup]="displayNameForm" (ngSubmit)="onDisplaynameSubmit()">
-    <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
-      <h3 class="text-2xl text-center mb-6 font-bold">Change display name</h3>
+  <form
+    [formGroup]="displayNameForm"
+    (ngSubmit)="onDisplayNameSubmit()"
+    *ngIf="!displayNameSuccess"
+    class="mx-1 my-6"
+  >
+    <h3 class="text-lg text-left mb-4 font-bold">Change display name</h3>
 
-      <app-server-errors [serverErrors]="displaynameErrors"></app-server-errors>
+    <app-server-errors [serverErrors]="displaynameErrors"></app-server-errors>
 
-      <app-text-input
-        formControlName="new"
-        inputId="new-display-name-input"
-        label=" "
-        placeholder="Choose your display name"
-      ></app-text-input>
+    <app-text-input
+      formControlName="new"
+      inputId="new-display-name-input"
+      label=" "
+      placeholder="Choose your display name"
+    ></app-text-input>
 
-      <app-submit-input></app-submit-input>
-    </div>
+    <app-submit-input></app-submit-input>
   </form>
 
-  <form [formGroup]="emailForm" (ngSubmit)="onEmailSubmit()">
+  <div *ngIf="displayNameSuccess">
     <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
-      <h3 class="text-2xl text-center mb-6 font-bold">Change email</h3>
-
-      <app-server-errors [serverErrors]="emailErrors"></app-server-errors>
-
-      <app-email-input
-        formControlName="email"
-        inputId="new-email-input"
-        placeholder="Choose your email"
-      ></app-email-input>
-
-      <app-submit-input></app-submit-input>
+      <p>Your display name has been updated.</p>
     </div>
+  </div>
+
+  <form
+    [formGroup]="emailForm"
+    (ngSubmit)="onEmailSubmit()"
+    *ngIf="!emailSuccess"
+    class="mx-1 my-6"
+  >
+    <h3 class="text-lg text-left mb-4 font-bold">Change email</h3>
+
+    <app-server-errors [serverErrors]="emailErrors"></app-server-errors>
+
+    <app-email-input
+      formControlName="email"
+      inputId="new-email-input"
+      label=" "
+      placeholder="Choose your email"
+    ></app-email-input>
+
+    <app-submit-input></app-submit-input>
   </form>
+
+  <div *ngIf="emailSuccess">
+    <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
+      <p>Check your email to confirm your new email.</p>
+    </div>
+  </div>
 </div>

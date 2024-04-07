@@ -13,11 +13,13 @@ import { PasswordInputComponent } from '../../../components/forms/password-input
 import { TextInputComponent } from '../../../components/forms/text-input/text-input.component';
 import { EmailInputComponent } from '../../../components/forms/email-input/email-input.component';
 import { ServerErrorsComponent } from '../../../components/forms/server-errors/server-errors.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-edit',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     SubmitInputComponent,
@@ -35,6 +37,9 @@ export class EditComponent {
   passwordErrors: ServerError[] = [];
   displaynameErrors: ServerError[] = [];
   emailErrors: ServerError[] = [];
+
+  displayNameSuccess = false;
+  emailSuccess = false;
 
   passwordForm = new FormGroup({
     old: new FormControl('', {
@@ -69,15 +74,21 @@ export class EditComponent {
       });
   }
 
-  onDisplaynameSubmit(): void {
+  onDisplayNameSubmit(): void {
     this.identityService
       .updateDisplayName(this.displayNameForm.value)
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        this.identityService.currentUser!.displayName =
+          this.displayNameForm.value.new || '';
+        this.displayNameSuccess = true;
+      });
   }
 
   onEmailSubmit(): void {
     this.identityService
       .startUpdateEmail(this.emailForm.value)
-      .subscribe((res) => {});
+      .subscribe((res) => {
+        this.emailSuccess = true;
+      });
   }
 }
