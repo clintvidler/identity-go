@@ -20,7 +20,7 @@ import { pendingUpdateEmailGuard } from './guards/pending-update-email.guard';
 import { DummyComponent } from './public/dummy/dummy.component';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/login' },
+  { path: '', pathMatch: 'full', redirectTo: '/user' },
   {
     path: '',
     component: PrivateComponent,

@@ -49,6 +49,13 @@ export class NavMainComponent implements OnInit {
       link: '/register',
     },
   ];
+
+  isAuth(): boolean {
+    if (this.user) {
+      return true;
+    }
+    return false;
+  }
 }
 
 interface MenuItem {

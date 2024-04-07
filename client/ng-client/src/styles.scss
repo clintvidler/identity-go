@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .container {
+    @apply max-w-sm self-center;
+  }
+}
+
 @import "https://fonts.googleapis.com/css2?family=Cinzel:wght@300;400;500&display=swap";
 @import "https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500&display=swap";
 
@@ -92,7 +98,6 @@
 }
 
 html {
-  margin-top: 69px;
 }
 
 /* Light mode */
