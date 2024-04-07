@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmailPendingComponent } from './email-pending.component';
+import { DummyComponent } from './dummy.component';
 
-describe('EmailPendingComponent', () => {
-  let component: EmailPendingComponent;
-  let fixture: ComponentFixture<EmailPendingComponent>;
+describe('DummyComponent', () => {
+  let component: DummyComponent;
+  let fixture: ComponentFixture<DummyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmailPendingComponent]
+      imports: [DummyComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EmailPendingComponent);
+    fixture = TestBed.createComponent(DummyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

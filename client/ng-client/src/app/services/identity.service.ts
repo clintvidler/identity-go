@@ -220,8 +220,6 @@ export class IdentityService {
   // Update display name
 
   updateDisplayName(data: any): Observable<any> {
-    console.warn('updateDisplayName', data);
-
     return this.http.post<Response>(
       `${environment.server}/update-display-name`,
       data,

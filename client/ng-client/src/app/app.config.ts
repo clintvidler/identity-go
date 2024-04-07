@@ -11,6 +11,9 @@ import {
   refreshInterceptor,
 } from './interceptors/refresh.interceptor';
 import { AppInitialiserProvider } from './providers/app-initializer-provider';
+import { PendingResetPasswordService } from './guards/pending-reset-password.guard';
+import { PendingRegistrationService } from './guards/pending-registration.guard';
+import { PendingUpdateEmailService } from './guards/pending-update-email.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,6 +23,9 @@ export const appConfig: ApplicationConfig = {
     ),
     IsLoggedInService,
     IsNotLoggedInService,
+    PendingRegistrationService,
+    PendingResetPasswordService,
+    PendingUpdateEmailService,
     RefreshService,
     {
       provide: APP_INITIALIZER,
