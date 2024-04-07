@@ -25,9 +25,14 @@
     </div>
   </form>
 </div>
+
 <div *ngIf="success">
-  <h1>
-    Your account has been confirmed.
-    <a [routerLink]="['/login']" [queryParams]="">Login</a>
-  </h1>
+  <div class="bg-white dark:bg-gray-900 drop-shadow-xl p-8 rounded-xl">
+    <p>
+      Your account has been confirmed.
+      <a [routerLink]="['/login']" [queryParams]="" class="text-accent-400"
+        >Login</a
+      >
+    </p>
+  </div>
 </div>

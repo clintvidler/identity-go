@@ -13,14 +13,13 @@ import { RegisterComponent } from './public/register/register.component';
 import { PendingComponent as RegisterPendingComponent } from './public/register/pending/pending.component';
 import { ResetPasswordComponent } from './public/reset-password/reset-password.component';
 import { PendingComponent as ResetPasswordPendingComponent } from './public/reset-password/pending/pending.component';
-import { InvalidKeyComponent } from './public/invalid-key/invalid-key.component';
 import { pendingResetPasswordGuard } from './guards/pending-reset-password.guard';
 import { pendingRegistrationGuard } from './guards/pending-registration.guard';
 import { pendingUpdateEmailGuard } from './guards/pending-update-email.guard';
 import { DummyComponent } from './public/dummy/dummy.component';
 
 export const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: '/login' },
+  { path: '', pathMatch: 'full', redirectTo: '/user' },
   {
     path: '',
     component: PrivateComponent,
@@ -76,7 +75,7 @@ export const routes: Routes = [
         canActivate: [isNotLoggedInGuard, pendingRegistrationGuard],
       },
       { path: 'logout', component: LogoutComponent },
-      { path: 'invalid-key', component: InvalidKeyComponent },
+      { path: 'invalid-key', redirectTo: '/user' },
     ],
   },
 ];

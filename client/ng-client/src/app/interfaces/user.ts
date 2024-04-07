@@ -1,6 +1,6 @@
 export interface User {
   id: number;
-  display_name: string;
+  displayName: string;
   email: string;
   created_at: string;
   updated_at: string;
